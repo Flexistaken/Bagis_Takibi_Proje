@@ -1,18 +1,32 @@
 package com.example.proje_bagis_takibi.service;
 
 import com.example.proje_bagis_takibi.model.Bagis;
-import com.example.proje_bagis_takibi.model.BagisTuru;
 import com.example.proje_bagis_takibi.util.FileUtil;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BagisService {
+    private final String dosyaYolu = "bagislar.txt";
 
-    private static final String DOSYA = "data/bagislar.txt";
+    // Bağış kaydı ve zorunlu miktar kontrolü
+    public boolean bagisYap(Bagis bagis) {
+        if (bagis.getMiktar() <= 0) {
+            return false; // Miktar 0'dan büyük olmalı kontrolü
+        }
+        FileUtil.bagisEkle(dosyaYolu, bagis);
+        return true;
+    }
 
-    public static void bagisYap(int bagisciId, int kurumId, BagisTuru tur, double miktar, String aciklama) {
-        int id = FileUtil.sonIdyiBul(DOSYA) + 1;
-        Bagis b = new Bagis(id, bagisciId, kurumId, tur, miktar, aciklama);
+    // Kullanıcının kendi bağışlarını listelemesi
+    public List<Bagis> kullaniciBagislariniGetir(int bagisciId) {
+        List<Bagis> hepsi = FileUtil.bagislariOku(dosyaYolu);
+        return hepsi.stream()
+                .filter(b -> b.getBagisciId() == bagisciId)
+                .collect(Collectors.toList());
+    }
 
-        FileUtil.bagisEkle(DOSYA, b);
-        System.out.println("Bagis kaydedildi.");
+    // Admin için tüm bağışları listeleme
+    public List<Bagis> tumBagislariGetir() {
+        return FileUtil.bagislariOku(dosyaYolu);
     }
 }

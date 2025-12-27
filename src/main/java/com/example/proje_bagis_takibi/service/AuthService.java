@@ -1,37 +1,27 @@
 package com.example.proje_bagis_takibi.service;
 
-import com.example.proje_bagis_takibi.model.Bagisci;
-import com.example.proje_bagis_takibi.model.Kullanici;
+import com.example.proje_bagis_takibi.model.*;
 import com.example.proje_bagis_takibi.util.FileUtil;
-
 import java.util.List;
 
 public class AuthService {
+    private final String dosyaYolu = "users.txt";
 
-    private static final String DOSYA = "data/kullanicilar.txt";
-
-    public static void kayitOl(String ad, String email, String sifre) {
-        List<Kullanici> liste = FileUtil.kullanicilariOku(DOSYA);
-
-        for (Kullanici k : liste) {
-            if (k.getEmail().equalsIgnoreCase(email)) {
-                System.out.println("Bu email sistemde zaten kayitli.");
-                return;
-            }
-        }
-
-        int id = FileUtil.sonIdyiBul(DOSYA) + 1;
-        FileUtil.kullaniciEkle(DOSYA, new Bagisci(id, ad, email, sifre));
-        System.out.println("Kayit basarili.");
-    }
-
-    public static Kullanici girisYap(String email, String sifre) {
-        for (Kullanici k : FileUtil.kullanicilariOku(DOSYA)) {
-            if (k.getEmail().equalsIgnoreCase(email) && k.getSifre().equals(sifre)) {
+    // Giriş kontrolü ve rol belirleme
+    public Kullanici login(String email, String sifre) {
+        List<Kullanici> kullanicilar = FileUtil.kullanicilariOku(dosyaYolu);
+        for (Kullanici k : kullanicilar) {
+            if (k.getEmail().equals(email) && k.getSifre().equals(sifre)) {
                 return k;
             }
         }
-        System.out.println("Hata, giris basarisiz!");
         return null;
+    }
+
+    // Yeni bağışçı kaydı oluşturma
+    public void kayitOl(String ad, String email, String sifre) {
+        int yeniId = FileUtil.sonIdyiBul(dosyaYolu) + 1;
+        Bagisci yeniBagisci = new Bagisci(yeniId, ad, email, sifre);
+        FileUtil.kullaniciEkle(dosyaYolu, yeniBagisci);
     }
 }
