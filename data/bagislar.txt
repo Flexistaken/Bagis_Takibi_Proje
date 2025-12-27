@@ -1,0 +1,10 @@
+1,4,1,PARA,500,Deprem yardimi
+2,5,3,GIDA,20,Gida paketi bagisi
+3,6,4,GIYIM,15,Kiyafet bagisi
+4,7,2,PARA,1000,Egitim destegi
+5,8,5,GIDA,30,Ramazan yardimi
+6,9,6,PARA,250,Saglik destegi
+7,10,7,GIYIM,10,Kislik kiyafet bagisi
+8,11,8,PARA,750,Ogrenci bursu
+9,12,9,GIDA,40,Acil gida yardimi
+10,13,10,PARA,300,Sosyal yardim
