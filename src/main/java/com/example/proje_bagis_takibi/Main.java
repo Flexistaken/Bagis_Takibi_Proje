@@ -71,6 +71,9 @@ public class Main {
             System.out.println("1 - Genel Sistem Raporu");
             System.out.println("2 - Yeni Kurum Tanimla");
             System.out.println("3 - Mevcut Kurumu Sil");
+            System.out.println("4 - Bagis Sil ");
+            System.out.println("5 - Kurum Adi Guncelle");
+            System.out.println("6 - Detayli Raporlar");
             System.out.println("0 - Oturumu Kapat");
             System.out.print("Secim: ");
 
@@ -82,17 +85,56 @@ public class Main {
                 System.out.println("\n>> TOPLAM BAGIS: " + raporService.toplamBagisMiktari() + " TL");
                 System.out.println(">> EN COK BAGIS ALAN KURUM ID: " + raporService.enCokBagisAlanKurumId());
                 System.out.println(">> EN AKTIF BAGISCI ID: " + raporService.enAktifBagisciId());
-            } else if (secim == 2) {
+            }
+            else if (secim == 2) {
                 System.out.print("Kurum Adi: ");
                 String ad = sc.nextLine();
                 kurumService.kurumEkle(ad);
                 System.out.println("Kurum sisteme kaydedildi.");
-            } else if (secim == 3) {
+            }
+            else if (secim == 3) {
                 System.out.print("Silinecek Kurum ID: ");
                 int id = sc.nextInt();
                 kurumService.kurumSil(id);
                 System.out.println("Kurum ve bagli veriler temizlendi.");
             }
+            else if (secim == 4) {
+                System.out.print("Silinecek Bagis ID: ");
+                int bagisId = sc.nextInt();
+                sc.nextLine();
+
+                bagisService.bagisSilAdmin(bagisId);
+                System.out.println("Bagis silindi.");
+            }
+            else if (secim == 5) {
+                System.out.print("Guncellenecek Kurum ID: ");
+                int id = sc.nextInt();
+                sc.nextLine();
+
+                System.out.print("Yeni Kurum Adi: ");
+                String yeniAd = sc.nextLine();
+
+                try {
+                    kurumService.kurumGuncelle(id, yeniAd);
+                    System.out.println("Kurum adi guncellendi.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Hata: " + e.getMessage());
+                }
+            }
+            else if (secim == 6) {
+                System.out.println("\n--- KURUM BAZLI BAGIS RAPORU ---");
+                raporService.kurumBazliBagisRaporu()
+                        .forEach(System.out::println);
+
+                System.out.println("\n--- EN COK BAGIS YAPANLAR ---");
+                raporService.enCokBagisYapanBagiscilar(3)
+                        .forEach(System.out::println);
+
+                System.out.println("\n--- SON BAGISLAR ---");
+                raporService.sonBagislar(5)
+                        .forEach(System.out::println);
+            }
+
         }
     }
 
@@ -125,13 +167,28 @@ public class Main {
                 String aciklama = sc.nextLine();
 
                 // BagisTuru.PARA kullanildi (Enum ile uyumlu)
-                Bagis yeniBagis = new Bagis(0, b.getId(), kId, BagisTuru.PARA, miktar, aciklama);
+                boolean basarili = bagisService.bagisYap(
+                        b.getId(),          // bagisciId
+                        kId,                // kurumId
+                        BagisTuru.PARA,     // bagis turu
+                        miktar,
+                        aciklama
+                );
 
-                if (bagisService.bagisYap(yeniBagis)) {
+                try {
+                    bagisService.bagisYap(
+                            b.getId(),
+                            kId,
+                            BagisTuru.PARA,
+                            miktar,
+                            aciklama
+                    );
                     System.out.println("Islem basarili. Desteginiz icin tesekkurler!");
-                } else {
-                    System.out.println("Hata: Bagis miktari 0'dan buyuk olmalidir!");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Hata: " + e.getMessage());
                 }
+
+
             } else if (secim == 3) {
                 System.out.println("\n--- GECMIS BAGISLARINIZ ---");
                 bagisService.kullaniciBagislariniGetir(b.getId())

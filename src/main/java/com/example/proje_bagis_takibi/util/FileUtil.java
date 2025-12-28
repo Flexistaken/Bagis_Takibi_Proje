@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileUtil {
+public class    FileUtil {
 
     /* ================= KULLANICI ================= */
 
@@ -53,6 +53,25 @@ public class FileUtil {
         }
     }
 
+    public static int bagisSonId(String dosya) {
+        int max = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(dosya))) {
+            String satir;
+            while ((satir = br.readLine()) != null) {
+                if (satir.trim().isEmpty()) continue;
+
+                // bagislar.txt → , "VIRGUL" ile ayrılıyor
+                int id = Integer.parseInt(satir.split(",")[0]);
+                if (id > max) max = id;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return max;
+    }
+
     public static int sonIdyiBul(String dosya) {
         int max = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(dosya))) {
@@ -67,6 +86,33 @@ public class FileUtil {
         }
         return max;
     }
+    public static void bagisSil(String dosya, int bagisId) {
+        List<String> yeniListe = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(dosya))) {
+            String satir;
+            while ((satir = br.readLine()) != null) {
+                if (satir.trim().isEmpty()) continue;
+
+                int id = Integer.parseInt(satir.split(",")[0]);
+                if (id != bagisId) {
+                    yeniListe.add(satir);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dosya))) {
+            for (String s : yeniListe) {
+                bw.write(s);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /* ================= KURUM ================= */
 
@@ -101,6 +147,39 @@ public class FileUtil {
     public static int kurumSonId(String dosya) {
         return sonIdyiBul(dosya);
     }
+    //kurumları güncelleme
+    public static void kurumGuncelle(String dosya, int kurumId, String yeniAd) {
+        List<String> yeniListe = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(dosya))) {
+            String satir;
+            while ((satir = br.readLine()) != null) {
+                if (satir.trim().isEmpty()) continue;
+
+                String[] d = satir.split(",");
+                int id = Integer.parseInt(d[0]);
+
+                if (id == kurumId) {
+                    // ID aynı, sadece ad değişiyor
+                    yeniListe.add(id + "," + yeniAd);
+                } else {
+                    yeniListe.add(satir);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dosya))) {
+            for (String s : yeniListe) {
+                bw.write(s);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /* ================= BAGIS (ileride lazım) ================= */
 

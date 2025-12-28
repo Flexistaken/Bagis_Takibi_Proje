@@ -2,9 +2,8 @@ module com.example.proje_bagis_takibi {
     requires javafx.controls;
     requires javafx.fxml;
 
-    // Bu satır JavaFX'in ekranları çizmesini sağlar
-    opens com.example.bagis_takibi_proje to javafx.fxml, javafx.graphics;
+    opens com.example.bagis_takibi_proje to javafx.fxml;
+    opens com.example.proje_bagis_takibi.model to javafx.base;
 
-    // Bu satır diğer sınıfların bu pakete erişmesini sağlar
     exports com.example.bagis_takibi_proje;
 }

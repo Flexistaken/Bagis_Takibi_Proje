@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.AdminController"
+            prefWidth="800" prefHeight="500">
+
+    <!-- ÜST BAŞLIK -->
+    <top>
+        <Label text="ADMIN PANELI"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size:20px; -fx-padding:10; -fx-font-weight:bold;"/>
+    </top>
+
+    <!-- SOL MENU -->
+    <left>
+        <VBox spacing="10" style="-fx-padding:10;">
+            <Button text="Kurumlari Listele" onAction="#kurumlariListele"/>
+
+            <Separator/>
+
+            <Label text="Yeni Kurum"/>
+            <TextField fx:id="kurumAdField" promptText="Kurum adi"/>
+            <Button text="Kurum Ekle" onAction="#kurumEkle"/>
+
+            <Separator/>
+
+            <Button text="Kurum Sil" onAction="#kurumSil"/>
+            <Button text="Kurum Guncelle" onAction="#kurumGuncelle"/>
+            <Button text="Bagis Sil" onAction="#bagisSil"/>
+            <Button text="Raporlar" onAction="#raporlarAc"/>
+        </VBox>
+    </left>
+
+    <!-- ORTA ALAN -->
+    <center>
+        <VBox spacing="10" style="-fx-padding:10;">
+            <Label text="Kurumlar"/>
+
+            <TableView fx:id="kurumTable">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID"/>
+                    <TableColumn fx:id="adColumn" text="Kurum Adi"/>
+                </columns>
+            </TableView>
+
+            <Separator/>
+
+            <Label text="Bagislar"/>
+
+            <TableView fx:id="bagisTable">
+                <columns>
+                    <TableColumn fx:id="bagisIdColumn" text="ID"/>
+                    <TableColumn fx:id="bagisciIdColumn" text="Bagisci ID"/>
+                    <TableColumn fx:id="bagisKurumIdColumn" text="Kurum ID"/>
+                    <TableColumn fx:id="bagisMiktarColumn" text="Miktar"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+
+</BorderPane>

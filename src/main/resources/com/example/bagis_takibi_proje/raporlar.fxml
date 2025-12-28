@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.RaporlarController"
+            prefWidth="600" prefHeight="500">
+
+    <top>
+        <Label text="DETAYLI RAPORLAR"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size:18px; -fx-padding:10; -fx-font-weight:bold;"/>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding:10;">
+
+            <Label text="Kurum Bazli Bagislar"/>
+            <ListView fx:id="kurumRaporList"/>
+
+            <Label text="En Cok Bagis Yapanlar"/>
+            <ListView fx:id="bagisciRaporList"/>
+
+            <Label text="Son Bagislar"/>
+            <ListView fx:id="sonBagisList"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

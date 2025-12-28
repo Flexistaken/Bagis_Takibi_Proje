@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.BagisciController"
+            prefWidth="800" prefHeight="500">
+
+    <!-- ÜST -->
+    <top>
+        <Label text="BAGISCI PANELI"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size:20px; -fx-padding:10; -fx-font-weight:bold;"/>
+    </top>
+
+    <!-- SOL MENU -->
+    <left>
+        <VBox spacing="10" style="-fx-padding:10;">
+            <Button text="Kurumlari Gor" onAction="#kurumlariListele"/>
+            <Separator/>
+            <Label text="Yeni Bagis"/>
+            <TextField fx:id="bagisKurumIdField" promptText="Kurum ID"/>
+            <TextField fx:id="bagisMiktarField" promptText="Bagis Miktari"/>
+            <TextField fx:id="bagisAciklamaField" promptText="Aciklama"/>
+            <Button text="Bagis Yap" onAction="#bagisYap"/>
+        </VBox>
+    </left>
+
+    <!-- ORTA -->
+    <center>
+        <VBox spacing="10" style="-fx-padding:10;">
+
+            <Label text="Kurumlar"/>
+
+            <TableView fx:id="kurumTable">
+                <columns>
+                    <TableColumn fx:id="kurumIdColumn" text="ID"/>
+                    <TableColumn fx:id="kurumAdColumn" text="Kurum Adi"/>
+                </columns>
+            </TableView>
+
+            <Separator/>
+
+            <Label text="Gecmis Bagislarim"/>
+
+            <TableView fx:id="bagisTable">
+                <columns>
+                    <TableColumn fx:id="bagisKurumIdColumn" text="Kurum ID"/>
+                    <TableColumn fx:id="bagisMiktarColumn" text="Miktar"/>
+                    <TableColumn fx:id="bagisAciklamaColumn" text="Aciklama"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+
+</BorderPane>

@@ -1,6 +1,6 @@
 1,Kizilay
 2,Yesilay
-3,AFAD
+3,Afet ve Acil Durum Yönetimi Başkanlığı AFAD
 4,Losev
 5,Darussafaka
 6,TurkEgitimVakfi
@@ -17,4 +17,4 @@
 17,GenclikVakfi
 18,KulturelMirasVakfi
 19,DepremYardimDernegi
-20,OgrenciDestekVakfi
+21,AHBAP
