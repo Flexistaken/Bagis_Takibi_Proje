@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.BagisFormController"
+            stylesheets="@style.css"
+            prefWidth="350" prefHeight="260">
+
+    <VBox spacing="14" alignment="CENTER"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+
+        <Label text="Bağış Yap"
+               styleClass="panel-title"/>
+
+        <TextField fx:id="kurumIdField"
+                   promptText="Kurum ID"
+                   editable="false"/>
+
+        <TextField fx:id="miktarField"
+                   promptText="Bağış Miktarı"/>
+
+        <TextField fx:id="aciklamaField"
+                   promptText="Açıklama"/>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Bağış Yap"
+                    styleClass="primary-button"
+                    onAction="#bagisYap"/>
+
+            <Button text="Vazgeç"
+                    onAction="#iptal"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

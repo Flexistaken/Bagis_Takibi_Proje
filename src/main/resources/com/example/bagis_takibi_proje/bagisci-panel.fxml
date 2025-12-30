@@ -5,50 +5,64 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.bagis_takibi_proje.BagisciController"
+            stylesheets="@style.css"
+            styleClass="panel-root"
             prefWidth="800" prefHeight="500">
 
+
     <!-- ÜST -->
-    <top>
-        <Label text="BAGISCI PANELI"
-               BorderPane.alignment="CENTER"
-               style="-fx-font-size:20px; -fx-padding:10; -fx-font-weight:bold;"/>
-    </top>
+    <Label text="BAĞIŞÇI PANELİ"
+           BorderPane.alignment="CENTER"
+           styleClass="panel-title"/>
 
     <!-- SOL MENU -->
     <left>
-        <VBox spacing="10" style="-fx-padding:10;">
-            <Button text="Kurumlari Gor" onAction="#kurumlariListele"/>
+        <VBox spacing="10" styleClass="sidebar">
+
+            <Label text="MENÜ"
+                   styleClass="sidebar-title"/>
+            <!-- kurumları listeleyi burdan da çıkradım -->
+
+            <Button text="Bağış Yap"
+                    styleClass="menu-button"
+                    onAction="#bagisPopupAc"/>
+
             <Separator/>
-            <Label text="Yeni Bagis"/>
-            <TextField fx:id="bagisKurumIdField" promptText="Kurum ID"/>
-            <TextField fx:id="bagisMiktarField" promptText="Bagis Miktari"/>
-            <TextField fx:id="bagisAciklamaField" promptText="Aciklama"/>
-            <Button text="Bagis Yap" onAction="#bagisYap"/>
+
+            <Button text="Çıkış Yap"
+                    styleClass="logout-button"
+                    onAction="#cikisYap"/>
+
         </VBox>
     </left>
+
 
     <!-- ORTA -->
     <center>
         <VBox spacing="10" style="-fx-padding:10;">
 
-            <Label text="Kurumlar"/>
+            <Label text="Kurumlar"
+                   styleClass="section-title"/>
+
 
             <TableView fx:id="kurumTable">
                 <columns>
                     <TableColumn fx:id="kurumIdColumn" text="ID"/>
-                    <TableColumn fx:id="kurumAdColumn" text="Kurum Adi"/>
+                    <TableColumn fx:id="kurumAdColumn" text="Kurum Adı"/>
                 </columns>
             </TableView>
 
             <Separator/>
 
-            <Label text="Gecmis Bagislarim"/>
+            <Label text="Geçmiş Bağışlarım"
+                   styleClass="section-title"/>
+
 
             <TableView fx:id="bagisTable">
                 <columns>
                     <TableColumn fx:id="bagisKurumIdColumn" text="Kurum ID"/>
                     <TableColumn fx:id="bagisMiktarColumn" text="Miktar"/>
-                    <TableColumn fx:id="bagisAciklamaColumn" text="Aciklama"/>
+                    <TableColumn fx:id="bagisAciklamaColumn" text="Açıklama"/>
                 </columns>
             </TableView>
 

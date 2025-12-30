@@ -1,4 +1,4 @@
-1,Burak,burak@mail.com,123,ADMIN
+1,Burak,b,1,ADMIN
 2,Deniz,deniz@mail.com,123456,ADMIN
 3,Eda,eda@mail.com,123456,ADMIN
 
@@ -24,3 +24,4 @@
 23,Kıvanc,kıvanc@mail.com,123456,BAGISCI
 24,Adil,adil@mail.com,123456,BAGISCI
 25,Yagmur,yagmur@mail.com,123456,BAGISCI
+26,Burak,b,2,BAGISCI

@@ -10,3 +10,5 @@
 11,6,3,PARA,250.0,içimden geldi
 12,6,6,PARA,800.0,bağış yapmak iyidir
 13,6,15,PARA,300.0,new bağış
+14,26,21,PARA,1000.0,buraktan paralar
+15,26,5,PARA,500.0,yes

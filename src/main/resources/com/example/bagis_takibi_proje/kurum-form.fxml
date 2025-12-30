@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.KurumFormController"
+            stylesheets="@style.css"
+            prefWidth="350" prefHeight="220">
+
+    <VBox spacing="14" alignment="CENTER"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+
+        <Label fx:id="titleLabel"
+               text="Kurum Ekle"
+               styleClass="panel-title"/>
+
+        <TextField fx:id="kurumAdField"
+                   promptText="Kurum Adı"/>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Kaydet"
+                    styleClass="primary-button"
+                    onAction="#kaydet"/>
+
+            <Button text="Vazgeç"
+                    onAction="#iptal"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

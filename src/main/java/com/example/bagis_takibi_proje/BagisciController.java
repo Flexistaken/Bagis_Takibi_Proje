@@ -12,6 +12,10 @@ import com.example.proje_bagis_takibi.model.Bagis;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+
 
 
 public class BagisciController {
@@ -67,6 +71,17 @@ public class BagisciController {
         bagisKurumIdColumn.setCellValueFactory(new PropertyValueFactory<>("kurumId"));
         bagisMiktarColumn.setCellValueFactory(new PropertyValueFactory<>("miktar"));
         bagisAciklamaColumn.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
+
+        kurumTable.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY
+        );
+
+        bagisTable.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY
+        );
+
+        kurumlariListele();
+
     }
 
 
@@ -100,7 +115,7 @@ public class BagisciController {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
-            alert.setContentText("Bagis basariyla yapildi.");
+            alert.setContentText("Bağış başarıyla yapıldı.");
             alert.showAndWait();
             //bağış yaptıktan sonra tabloyu güncelleme
             bagislarimiListele();
@@ -108,7 +123,7 @@ public class BagisciController {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Hata");
-            alert.setContentText("Bagis yapilirken hata olustu.");
+            alert.setContentText("Bağış yapılırken hata oluştu!");
             alert.showAndWait();
         }
     }
@@ -124,5 +139,63 @@ public class BagisciController {
                 )
         );
     }
+
+    @FXML
+    private void cikisYap() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("login.fxml")
+            );
+
+            Stage stage = (Stage) kurumTable.getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Giriş");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void bagisPopupAc() {
+        try {
+            if (kurumTable.getSelectionModel().getSelectedItem() == null) {
+                uyar("Lütfen bağış yapmak için bir kurum seçiniz.");
+                return;
+            }
+
+            int kurumId = kurumTable.getSelectionModel()
+                    .getSelectedItem()
+                    .getId();
+
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("bagis-form.fxml")
+            );
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Bağış Yap");
+
+            BagisFormController controller = loader.getController();
+            controller.init(aktifBagisci.getId(), kurumId);
+
+            stage.showAndWait();
+
+            // popup kapandıktan sonra bağışlarımı yenile
+            bagislarimiListele();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //alert
+    private void uyar(String mesaj) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setHeaderText(null);
+        a.setContentText(mesaj);
+        a.showAndWait();
+    }
+
 
 }

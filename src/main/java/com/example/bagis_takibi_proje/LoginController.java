@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -85,5 +84,22 @@ public class LoginController {
             hataLabel.setText("Panel acilirken hata olustu!");
         }
 
+    }
+
+    @FXML
+    private void kayitEkraniAc() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("register.fxml")
+            );
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Kayit Ol");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
