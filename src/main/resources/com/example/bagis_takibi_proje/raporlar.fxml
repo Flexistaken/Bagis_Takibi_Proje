@@ -16,13 +16,13 @@
     <center>
         <VBox spacing="10" style="-fx-padding:10;">
 
-            <Label text="Kurum Bazli Bagislar"/>
+            <Label text="Kurum Bazlı Bağışlar"/>
             <ListView fx:id="kurumRaporList"/>
 
-            <Label text="En Cok Bagis Yapanlar"/>
+            <Label text="En Cok Bağış Yapanlar"/>
             <ListView fx:id="bagisciRaporList"/>
 
-            <Label text="Son Bagislar"/>
+            <Label text="Son Bağışlar"/>
             <ListView fx:id="sonBagisList"/>
 
         </VBox>

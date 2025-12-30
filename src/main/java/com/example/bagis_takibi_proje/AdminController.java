@@ -68,7 +68,7 @@ public class AdminController {
     private void kurumSil() {
         Kurum secili = kurumTable.getSelectionModel().getSelectedItem();
         if (secili == null) {
-            uyar("Lütfen silmek icin kurum seciniz.");
+            uyar("Lütfen silmek icin kurum seçiniz.");
             return;
         }
 
@@ -183,7 +183,7 @@ public class AdminController {
 
     private void hata(String mesaj) {
         Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setHeaderText("Hata");
+        a.setHeaderText("Hata!");
         a.setContentText(mesaj);
         a.showAndWait();
     }

@@ -56,7 +56,7 @@ public class LoginController {
                 BagisciController controller = loader.getController();
                 controller.setAktifBagisci((Bagisci) k);
 
-                stage.setTitle("Bagisci Paneli");
+                stage.setTitle("Bağışçı Paneli");
                 stage.show();
 
                 ((Stage) ((Node) event.getSource())
@@ -81,7 +81,7 @@ public class LoginController {
 
         }catch (Exception e) {
             e.printStackTrace();
-            hataLabel.setText("Panel acilirken hata olustu!");
+            hataLabel.setText("Panel açılırken hata oluştu!");
         }
 
     }
@@ -95,7 +95,7 @@ public class LoginController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Kayit Ol");
+            stage.setTitle("Kayıt Ol");
             stage.show();
 
         } catch (Exception e) {
