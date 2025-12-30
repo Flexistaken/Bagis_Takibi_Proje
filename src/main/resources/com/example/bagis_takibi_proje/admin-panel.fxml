@@ -10,10 +10,27 @@
 
     <!-- ================= ÜST BAŞLIK ================= -->
     <top>
-        <Label text="ADMİN PANELİ"
-               BorderPane.alignment="CENTER"
-               styleClass="panel-title"/>
+        <HBox alignment="CENTER"
+              style="-fx-padding: 10;"
+              spacing="10">
+
+            <!-- SOL: Hoş geldin -->
+            <Label fx:id="welcomeLabel"
+                   styleClass="welcome-text"/>
+
+            <!-- Ortalamak için sol boşluk -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- ORTA: Panel Başlığı -->
+            <Label text="ADMİN PANELİ"
+                   styleClass="panel-title"/>
+
+            <!-- Sağ boşluk (denge için) -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+        </HBox>
     </top>
+
 
     <!-- ================= SOL MENU ================= -->
     <left>
