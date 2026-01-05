@@ -13,13 +13,15 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.geometry.Side;
-
-
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.*;
-
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
@@ -28,12 +30,17 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class RaporlarController {
 
-    @FXML private Label toplamBagisLabel;
-    @FXML private Label bugunBagisLabel;
-    @FXML private Label kurumSayisiLabel;
+    @FXML
+    private Label toplamBagisLabel;
+    @FXML
+    private Label bugunBagisLabel;
+    @FXML
+    private Label kurumSayisiLabel;
 
-    @FXML private PieChart kurumBagisChart;
-    @FXML private BarChart<String, Number> liderBagisciChart;
+    @FXML
+    private PieChart kurumBagisChart;
+    @FXML
+    private BarChart<String, Number> liderBagisciChart;
 
     private final BagisService bagisService = new BagisService();
     private final KurumService kurumService = new KurumService();
@@ -114,7 +121,6 @@ public class RaporlarController {
     }
 
 
-
     /* ================= BAR CHART ================= */
     private void liderBagiscilariGetir() {
 
@@ -156,12 +162,9 @@ public class RaporlarController {
 
     @FXML
     private void pdfExport() {
-
         FileChooser chooser = new FileChooser();
         chooser.setTitle("PDF Kaydet");
-        chooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PDF", "*.pdf")
-        );
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
 
         var file = chooser.showSaveDialog(toplamBagisLabel.getScene().getWindow());
         if (file == null) return;
@@ -171,31 +174,71 @@ public class RaporlarController {
             PdfWriter.getInstance(doc, new FileOutputStream(file));
             doc.open();
 
-            Font title = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-            Font text = new Font(Font.FontFamily.HELVETICA, 12);
+            // Font Tanımlamaları
+            BaseFont bfNormal = BaseFont.createFont("fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont bfBold = BaseFont.createFont("fonts/arialbd.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font titleFont = new Font(bfBold, 20, Font.BOLD, BaseColor.DARK_GRAY);
+            Font headerFont = new Font(bfBold, 12, Font.NORMAL, BaseColor.WHITE);
+            Font textFont = new Font(bfNormal, 11);
+            Font dateFont = new Font(bfNormal, 10, Font.ITALIC);
 
-            doc.add(new Paragraph("Bağış Takip Sistemi - Raporlar", title));
-            doc.add(new Paragraph(" "));
+            // 1. Üst Bilgi (Başlık ve Tarih)
+            Paragraph title = new Paragraph("BAĞIŞ TAKİP SİSTEMİ", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            doc.add(title);
 
-            doc.add(new Paragraph("Toplam Bağış: " + toplamBagisLabel.getText(), text));
-            doc.add(new Paragraph("Bugünkü Bağış: " + bugunBagisLabel.getText(), text));
-            doc.add(new Paragraph("Toplam Kurum: " + kurumSayisiLabel.getText(), text));
+            String currentDateTime = java.time.LocalDateTime.now()
+                    .format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+            Paragraph date = new Paragraph("Rapor Tarihi: " + currentDateTime, dateFont);
+            date.setAlignment(Element.ALIGN_RIGHT);
+            doc.add(date);
 
-            doc.add(new Paragraph(" "));
-            doc.add(new Paragraph("Kurumlara Göre Bağış Dağılımı", title));
+            doc.add(new Paragraph("\n")); // Boşluk
 
+            // 2. Özet Bilgi Alanı
+            PdfPTable summaryTable = new PdfPTable(1);
+            summaryTable.setWidthPercentage(100);
+            PdfPCell summaryCell = new PdfPCell(new Phrase("Genel İstatistikler", headerFont));
+            summaryCell.setBackgroundColor(new BaseColor(51, 122, 183)); // Mavi tonu
+            summaryCell.setPadding(5);
+            summaryTable.addCell(summaryCell);
+            doc.add(summaryTable);
+
+            doc.add(new Paragraph("Toplam Biriken Bağış: " + toplamBagisLabel.getText(), textFont));
+            doc.add(new Paragraph("Sistemdeki Toplam Kurum: " + kurumSayisiLabel.getText(), textFont));
+            doc.add(new Paragraph("\n"));
+
+            // 3. Kurum Dağılım Tablosu (2 Kolonlu)
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setWidths(new float[]{3f, 1f}); // Kolon genişlik oranları
+
+            // Tablo Başlıkları
+            PdfPCell h1 = new PdfPCell(new Phrase("Kurum Adı", headerFont));
+            h1.setBackgroundColor(BaseColor.GRAY);
+            h1.setPadding(8);
+            table.addCell(h1);
+
+            PdfPCell h2 = new PdfPCell(new Phrase("Miktar (TL)", headerFont));
+            h2.setBackgroundColor(BaseColor.GRAY);
+            h2.setPadding(8);
+            table.addCell(h2);
+
+            // Verileri Tabloya Ekleme
             for (PieChart.Data d : kurumBagisChart.getData()) {
-                doc.add(new Paragraph(d.getName(), text));
+                table.addCell(new PdfPCell(new Phrase(d.getName(), textFont)));
+                table.addCell(new PdfPCell(new Phrase(String.format("%.0f TL", d.getPieValue()), textFont)));
             }
 
+            doc.add(table);
             doc.close();
 
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "PDF başarıyla oluşturuldu.");
-            a.showAndWait();
+            new Alert(Alert.AlertType.INFORMATION, "Rapor başarıyla oluşturuldu.").showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "PDF oluşturulamadı.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Hata: " + e.getMessage()).showAndWait();
         }
     }
 }
