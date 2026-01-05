@@ -1,10 +1,11 @@
 package com.example.proje_bagis_takibi.util;
 
 import com.example.proje_bagis_takibi.model.*;
-
+import com.example.proje_bagis_takibi.model.Bagis;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class    FileUtil {
 
@@ -190,21 +191,42 @@ public class    FileUtil {
             String satir;
             while ((satir = br.readLine()) != null) {
                 if (satir.trim().isEmpty()) continue;
+
                 String[] d = satir.split(",");
+
+                int id = Integer.parseInt(d[0]);
+                int bagisciId = Integer.parseInt(d[1]);
+                int kurumId = Integer.parseInt(d[2]);
+                BagisTuru tur = BagisTuru.valueOf(d[3]);
+                double miktar = Double.parseDouble(d[4]);
+                String aciklama = d[5];
+
+                LocalDate tarih;
+
+                // ESKİ KAYIT: tarih yok
+                if (d.length < 7) {
+                    tarih = LocalDate.now();
+                } else {
+                    tarih = LocalDate.parse(d[6]);
+                }
+
                 liste.add(new Bagis(
-                        Integer.parseInt(d[0]),
-                        Integer.parseInt(d[1]),
-                        Integer.parseInt(d[2]),
-                        BagisTuru.valueOf(d[3]),
-                        Double.parseDouble(d[4]),
-                        d[5]
+                        id,
+                        bagisciId,
+                        kurumId,
+                        tur,
+                        miktar,
+                        aciklama,
+                        tarih
                 ));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return liste;
     }
+
 
     public static void bagisEkle(String dosya, Bagis b) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(dosya, true))) {
@@ -214,7 +236,8 @@ public class    FileUtil {
                             b.getKurumId() + "," +
                             b.getTur() + "," +
                             b.getMiktar() + "," +
-                            b.getAciklama()
+                            b.getAciklama() + "," +
+                            b.getTarih()
             );
             bw.newLine();
         } catch (IOException e) {
@@ -222,3 +245,4 @@ public class    FileUtil {
         }
     }
 }
+

@@ -1,211 +1,207 @@
 package com.example.bagis_takibi_proje;
 
-import com.example.proje_bagis_takibi.model.BagisTuru;
-import com.example.proje_bagis_takibi.model.Bagisci;
-import com.example.proje_bagis_takibi.model.Kurum;
+import com.example.proje_bagis_takibi.model.*;
 import com.example.proje_bagis_takibi.service.BagisService;
 import com.example.proje_bagis_takibi.service.KurumService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import com.example.proje_bagis_takibi.model.Bagis;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class BagisciController {
 
-    @FXML
-    private TableView<Kurum> kurumTable;
+    /* ===== DASHBOARD ===== */
+    @FXML private Label toplamBagisimLabel;
+    @FXML private Label aylikBagisLabel;
+    @FXML private Label sonBagisLabel;
 
-    @FXML
-    private TableColumn<Kurum, Integer> kurumIdColumn;
+    /* ===== BAĞIŞ FORM ===== */
+    @FXML private ComboBox<Kurum> kurumCombo;
+    @FXML private ComboBox<BagisTuru> turCombo;
+    @FXML private TextField miktarField;
+    @FXML private TextField aciklamaField;
+    @FXML private Button bagisYapBtn;
 
-    @FXML
-    private TableColumn<Kurum, String> kurumAdColumn;
-
-    @FXML
-    private TextField bagisKurumIdField;
-
-    @FXML
-    private TextField bagisMiktarField;
-
-    @FXML
-    private TextField bagisAciklamaField;
+    /* ===== TABLO ===== */
+    @FXML private TableView<Bagis> bagisTable;
+    @FXML private TableColumn<Bagis, String> bagisKurumColumn;
+    @FXML private TableColumn<Bagis, String> bagisTurColumn;
+    @FXML private TableColumn<Bagis, String> bagisMiktarColumn;
+    @FXML private TableColumn<Bagis, String> bagisTarihColumn;
 
     private final KurumService kurumService = new KurumService();
     private final BagisService bagisService = new BagisService();
-
-    @FXML
-    private TableView<Bagis> bagisTable;
-
-    @FXML
-    private TableColumn<Bagis, Integer> bagisKurumIdColumn;
-
-    @FXML
-    private TableColumn<Bagis, Double> bagisMiktarColumn;
-
-    @FXML
-    private TableColumn<Bagis, String> bagisAciklamaColumn;
-
-
-    // 🔴 Login'den set edeceğiz
+    private final Map<Integer, String> kurumMap = new HashMap<>();
     private Bagisci aktifBagisci;
 
+    /* ===== LOGIN'DEN SET EDİLİR ===== */
     public void setAktifBagisci(Bagisci bagisci) {
         this.aktifBagisci = bagisci;
+        dashboardDoldur();
         bagislarimiListele();
     }
 
-
     @FXML
     public void initialize() {
-        kurumIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        kurumAdColumn.setCellValueFactory(new PropertyValueFactory<>("ad"));
-
-        bagisKurumIdColumn.setCellValueFactory(new PropertyValueFactory<>("kurumId"));
-        bagisMiktarColumn.setCellValueFactory(new PropertyValueFactory<>("miktar"));
-        bagisAciklamaColumn.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
-
-        kurumTable.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY
+        kurumCombo.setItems(
+                FXCollections.observableArrayList(kurumService.kurumlariGetir())
         );
 
-        bagisTable.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY
+        turCombo.setItems(
+                FXCollections.observableArrayList(BagisTuru.values())
         );
 
-        kurumlariListele();
-
-    }
-
-
-    @FXML
-    private void kurumlariListele() {
-        kurumTable.setItems(
-                FXCollections.observableArrayList(
-                        kurumService.kurumlariGetir()
+        bagisKurumColumn.setCellValueFactory(cell ->
+                javafx.beans.binding.Bindings.createStringBinding(
+                        () -> kurumMap.getOrDefault(
+                                cell.getValue().getKurumId(),
+                                "Bilinmeyen Kurum"
+                        )
                 )
         );
+
+        bagisTurColumn.setCellValueFactory(
+                new PropertyValueFactory<>("tur")
+        );
+
+        bagisMiktarColumn.setCellValueFactory(c ->
+                javafx.beans.binding.Bindings.createStringBinding(
+                        () -> String.format("%,.0f ₺", c.getValue().getMiktar())
+                )
+        );
+
+        bagisTarihColumn.setCellValueFactory(c ->
+                javafx.beans.binding.Bindings.createStringBinding(
+                        () -> c.getValue().getTarih()
+                                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                )
+        );
+
+        for (Kurum k : kurumService.kurumlariGetir()) {
+            kurumMap.put(k.getId(), k.getAd());
+        }
+
+        bagisTable.setPlaceholder(
+                new Label("Henüz bağış yapmadınız. İlk bağışınızı yukarıdan yapabilirsiniz 💚")
+        );
+
+
     }
 
+    /* ===== BAĞIŞ YAP ===== */
     @FXML
     private void bagisYap() {
+
+        if (aktifBagisci == null ||
+                kurumCombo.getValue() == null ||
+                turCombo.getValue() == null ||
+                miktarField.getText().isBlank() ||
+                aciklamaField.getText().isBlank()) {
+
+            uyar("Lütfen tüm alanları doldurun.");
+            return;
+        }
+
+        double miktar;
         try {
-            int kurumId = Integer.parseInt(bagisKurumIdField.getText());
-            double miktar = Double.parseDouble(bagisMiktarField.getText());
-            String aciklama = bagisAciklamaField.getText();
+            miktar = Double.parseDouble(miktarField.getText());
+        } catch (NumberFormatException e) {
+            uyar("Bağış miktarı geçerli bir sayı olmalıdır.");
+            return;
+        }
+
+        if (miktar <= 0) {
+            uyar("Bağış miktarı 0'dan büyük olmalıdır.");
+            return;
+        }
+
+        // ✅ Disable burada
+        bagisYapBtn.setDisable(true);
+
+        try {
+            String aciklama = aciklamaField.getText().trim();
 
             bagisService.bagisYap(
                     aktifBagisci.getId(),
-                    kurumId,
-                    BagisTuru.PARA,
+                    kurumCombo.getValue().getId(),
+                    turCombo.getValue(),
                     miktar,
                     aciklama
             );
 
-            bagisKurumIdField.clear();
-            bagisMiktarField.clear();
-            bagisAciklamaField.clear();
+            miktarField.clear();
+            aciklamaField.clear();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Bağış başarıyla yapıldı.");
-            alert.showAndWait();
-            //bağış yaptıktan sonra tabloyu güncelleme
             bagislarimiListele();
+            dashboardDoldur();
+
+            bilgi("Bağış başarıyla yapıldı.");
 
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Hata");
-            alert.setContentText("Bağış yapılırken hata oluştu!");
-            alert.showAndWait();
+            e.printStackTrace();
+            uyar("Bağış yapılırken sistemsel hata oluştu.");
+
+        } finally {
+            // ✅ Hata olsa da olmasa da buton tekrar açılır
+            bagisYapBtn.setDisable(false);
         }
     }
 
-    private void bagislarimiListele() {
-        if (aktifBagisci == null) return;
 
+
+
+    /* ===== DASHBOARD ===== */
+    private void dashboardDoldur() {
+        var bagislar = bagisService.kullaniciBagislariniGetir(aktifBagisci.getId());
+
+        double toplam = bagislar.stream()
+                .mapToDouble(Bagis::getMiktar)
+                .sum();
+        toplamBagisimLabel.setText(String.format("%,.0f ₺", toplam));
+
+        var now = java.time.LocalDate.now();
+        double buAy = bagislar.stream()
+                .filter(b -> b.getTarih().getYear() == now.getYear()
+                        && b.getTarih().getMonth() == now.getMonth())
+                .mapToDouble(Bagis::getMiktar)
+                .sum();
+        aylikBagisLabel.setText(String.format("%,.0f ₺", buAy));
+
+        sonBagisLabel.setText(
+                bagislar.isEmpty()
+                        ? "-"
+                        : bagislar.get(bagislar.size() - 1)
+                        .getTarih().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        );
+    }
+
+
+    private void bagislarimiListele() {
         bagisTable.setItems(
                 FXCollections.observableArrayList(
-                        bagisService.kullaniciBagislariniGetir(
-                                aktifBagisci.getId()
-                        )
+                        bagisService.kullaniciBagislariniGetir(aktifBagisci.getId())
                 )
         );
     }
+
     @FXML
     private void cikisYap() {
-        try {
-            // 1. FXML dosyasını loader ile hazırla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-
-            // 2. Sahneyi (Scene) doğrudan loader üzerinden oluştur
-            // Parent hatasını önlemek için değişken tanımlamadan direkt yükleme yapıyoruz
-            Scene scene = new Scene(loader.load());
-
-            // 3. Mevcut pencereyi (Stage) kurumTable üzerinden yakala
-            Stage stage = (Stage) kurumTable.getScene().getWindow();
-
-            // 4. Yeni sahneyi ata ve başlığı güncelle
-            stage.setScene(scene);
-            stage.setTitle("Giriş - Bağış Takip Sistemi");
-
-            // stage.setMaximized(true) satırını sildik çünkü zaten büyük,
-            // böylece mevcut boyutunu koruyarak sadece içeriği değiştirir.
-            stage.show();
-
-        } catch (IOException e) {
-            System.err.println("Giriş ekranı yüklenirken hata oluştu!");
-            e.printStackTrace();
-        }
+        ((Stage) bagisTable.getScene().getWindow()).close();
     }
 
-    @FXML
-    private void bagisPopupAc() {
-        try {
-            if (kurumTable.getSelectionModel().getSelectedItem() == null) {
-                uyar("Lütfen bağış yapmak için bir kurum seçiniz.");
-                return;
-            }
-
-            int kurumId = kurumTable.getSelectionModel()
-                    .getSelectedItem()
-                    .getId();
-
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("bagis-form.fxml")
-            );
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Bağış Yap");
-
-            BagisFormController controller = loader.getController();
-            controller.init(aktifBagisci.getId(), kurumId);
-
-            stage.showAndWait();
-
-            // popup kapandıktan sonra bağışlarımı yenile
-            bagislarimiListele();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    //alert
-    private void uyar(String mesaj) {
-        Alert a = new Alert(Alert.AlertType.WARNING);
-        a.setHeaderText(null);
-        a.setContentText(mesaj);
-        a.showAndWait();
+    /* ===== ALERT ===== */
+    private void bilgi(String m) {
+        new Alert(Alert.AlertType.INFORMATION, m).showAndWait();
     }
 
-
+    private void uyar(String m) {
+        new Alert(Alert.AlertType.WARNING, m).showAndWait();
+    }
 }

@@ -19,13 +19,14 @@ public class KurumFormController {
 
     private Kurum guncellenecekKurum; // null ise EKLE modunda
 
-    // === EKLE MODU ===
+    /* ================= EKLE MODU ================= */
     public void ekleModu() {
         titleLabel.setText("Kurum Ekle");
         guncellenecekKurum = null;
+        kurumAdField.clear();
     }
 
-    // === GÜNCELLE MODU ===
+    /* ================= GÜNCELLE MODU ================= */
     public void guncelleModu(Kurum kurum) {
         titleLabel.setText("Kurum Güncelle");
         this.guncellenecekKurum = kurum;

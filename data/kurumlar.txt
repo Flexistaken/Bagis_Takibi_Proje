@@ -1,20 +1,20 @@
-1,Kizilay
-2,Yesilay
+1,Türk Kızılayı
+2,Yeşilay
 3,Afet ve Acil Durum Yönetimi Başkanlığı AFAD
-4,Losev
-5,Darussafaka
-6,TurkEgitimVakfi
-7,TemaVakfi
-8,AcilYardimDernegi
-9,SMAVakfi
-10,HayvanHaklariDernegi
-11,EgitimeDestekDernegi
-12,CocukEsirgemeKurumu
-13,KadinDayanismaVakfi
-14,SokakHayvanlariDernegi
-15,GidaBankasi
-16,EngelsizYasamDernegi
-17,GenclikVakfi
-18,KulturelMirasVakfi
-19,DepremYardimDernegi
-21,AHBAP
+4,Lösev
+5,Darüşşafaka
+6,Türk Eğitim Vakfı
+7,Tema Vakfı
+8,Acil Yardım Derneği
+9,SMA Vakfı
+10,Hayvan Hakları Derneği
+11,Eğitime Destek Derneği
+12,Çocuk Esirgeme Kurumu
+13,Kadın Dayanışma Vakfı
+14,Sokak Hayvanları Derneği
+15,Gıda Bankası
+16,Engelsiz Yaşam Derneği
+17,Gençlik Vakfı
+18,Kültürel Miras Vakfı
+19,Deprem Yardım Derneği
+20,AHBAP

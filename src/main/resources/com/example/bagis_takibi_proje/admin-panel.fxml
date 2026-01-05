@@ -1,51 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bagis_takibi_proje.AdminController"
-            stylesheets="@style.css" prefWidth="1000" prefHeight="650">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bagis_takibi_proje.AdminController"
+            stylesheets="@style.css"
+            styleClass="panel-gradient"
+            prefWidth="1000"
+            prefHeight="650">
 
+    <!-- SOL MENÜ -->
     <left>
         <VBox styleClass="sidebar">
             <Label text="YÖNETİM PANELİ" styleClass="sidebar-title"/>
-            <Button text="➕ Kurum Ekle" onAction="#kurumEkle" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="🔄 Kurum Güncelle" onAction="#kurumGuncelle" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="🗑️ Kurum Sil" onAction="#kurumSil" styleClass="menu-button" maxWidth="Infinity"/>
+
             <Separator opacity="0.3"/>
-            <Button text="❌ Bağış Sil" onAction="#bagisSil" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="📊 Raporlar" onAction="#raporlarAc" styleClass="menu-button" maxWidth="Infinity"/>
-            <Region VBox.vgrow="ALWAYS"/> <Button text="🚪 Çıkış Yap" onAction="#cikisYap" styleClass="logout-button" maxWidth="Infinity"/>
+
+            <ToggleButton fx:id="btnKurumEkle"
+                          text="➕ Kurum Ekle"
+                          onAction="#kurumEkle"
+                          styleClass="menu-toggle"
+                          maxWidth="Infinity"/>
+
+            <ToggleButton fx:id="btnKurumGuncelle"
+                          text="🔄 Kurum Güncelle"
+                          onAction="#kurumGuncelle"
+                          styleClass="menu-toggle"
+                          maxWidth="Infinity"/>
+
+            <ToggleButton fx:id="btnKurumSil"
+                          text="🗑️ Kurum Sil"
+                          onAction="#kurumSil"
+                          styleClass="menu-toggle"
+                          maxWidth="Infinity"/>
+
+            <Separator opacity="0.3"/>
+
+            <ToggleButton fx:id="btnBagisSil"
+                          text="❌ Bağış Sil"
+                          onAction="#bagisSil"
+                          styleClass="menu-toggle"
+                          maxWidth="Infinity"/>
+
+            <ToggleButton fx:id="btnRaporlar"
+                          text="📊 Raporlar"
+                          onAction="#raporlarAc"
+                          styleClass="menu-toggle"
+                          maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button text="🚪 Çıkış Yap"
+                    onAction="#cikisYap"
+                    styleClass="logout-button"
+                    maxWidth="Infinity"/>
         </VBox>
+
     </left>
 
+    <!-- SAĞ TARAF -->
     <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
             <VBox spacing="20" styleClass="content-area">
+
+                <!-- GENEL BAKIŞ -->
                 <Label text="Genel Bakış" styleClass="panel-title"/>
 
-                <VBox styleClass="card" spacing="10">
-                    <Label text="Kurum Listesi" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
-                    <TableView fx:id="kurumTable" prefHeight="250">
-                        <columns>
-                            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
-                            <TableColumn fx:id="adColumn" text="Kurum Adı" prefWidth="400"/>
-                        </columns>
-                    </TableView>
+                <!-- KURUM TABLOSU -->
+                <VBox styleClass="card" spacing="12">
+                    <Label text="Kurum Listesi"
+                           style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <TextField fx:id="kurumSearchField"
+                               promptText="Kurum ara..."
+                               styleClass="admin-input"/>
+
+                    <!-- Tabloya nefes aldırmak için wrap -->
+                    <StackPane styleClass="table-wrap">
+                        <TableView fx:id="kurumTable" styleClass="kurum-table" prefHeight="220">
+                            <columns>
+                                <TableColumn fx:id="idColumn" text="ID" prefWidth="80"/>
+                                <TableColumn fx:id="adColumn" text="Kurum Adı" prefWidth="420"/>
+                            </columns>
+                        </TableView>
+                    </StackPane>
                 </VBox>
 
-                <VBox styleClass="card" spacing="10">
-                    <Label text="Son Bağışlar" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
-                    <TableView fx:id="bagisTable" prefHeight="250">
-                        <columns>
-                            <TableColumn fx:id="bagisIdColumn" text="ID" prefWidth="50"/>
-                            <TableColumn fx:id="bagisciIdColumn" text="Bağışçı" prefWidth="150"/>
-                            <TableColumn fx:id="bagisKurumIdColumn" text="Kurum" prefWidth="150"/>
-                            <TableColumn fx:id="bagisMiktarColumn" text="Miktar (TL)" prefWidth="100"/>
-                        </columns>
-                    </TableView>
+                <!-- BAĞIŞ TABLOSU -->
+                <VBox styleClass="card" spacing="12">
+                    <Label text="Son Bağışlar"
+                           style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+
+                    <StackPane styleClass="table-wrap">
+                        <TableView fx:id="bagisTable" styleClass="bagis-table" prefHeight="260">
+                            <columns>
+                                <TableColumn fx:id="kurumColumn" text="Kurum"/>
+                                <TableColumn fx:id="bagisciColumn" text="Bağışçı"/>
+                                <TableColumn fx:id="turColumn" text="Tür"/>
+                                <TableColumn fx:id="miktarColumn" text="Miktar (₺)"/>
+                                <TableColumn fx:id="tarihColumn" text="Tarih"/>
+                            </columns>
+                        </TableView>
+                    </StackPane>
+
                 </VBox>
+
+                <!-- MINI DASHBOARDLAR (TABLOLARDAN AYRI - AŞAĞIDA) -->
+                <HBox spacing="20" styleClass="dashboard-cards" alignment="CENTER_LEFT">
+                    <Label text="💰" style="-fx-font-size: 28px;"/>
+                    <VBox styleClass="dashboard-card">
+                        <Label text="Toplam Bağış" styleClass="dashboard-card-title"/>
+                        <Label fx:id="toplamBagisLabel" text="0 ₺"
+                               styleClass="dashboard-card-value"/>
+                    </VBox>
+
+                    <VBox styleClass="dashboard-card">
+                        <Label text="Bugün Yapılan Bağış" styleClass="dashboard-card-title"/>
+                        <Label fx:id="bugunBagisLabel" text="0 ₺"
+                               styleClass="dashboard-card-value"/>
+                    </VBox>
+                </HBox>
+
             </VBox>
-        </ScrollPane>
     </center>
+
 </BorderPane>

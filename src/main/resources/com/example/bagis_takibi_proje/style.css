@@ -1,18 +1,20 @@
-/* ================= GLOBAL & COLORS ================= */
+/* ================= GLOBAL ================= */
 .root {
     -fx-font-family: "Inter", "Segoe UI", sans-serif;
-    -fx-background-color: #f0f2f5;
 }
 
-/* ================= LOGIN & REGISTER ÖZEL (YENİ) ================= */
-.login-root {
+/* ================= GRADIENT BACKGROUND ================= */
+.login-root,
+.panel-gradient {
     -fx-background-color: linear-gradient(to bottom right, #2c3e50, #4ca1af);
 }
 
+/* ================= LOGIN ================= */
 .login-card {
     -fx-background-color: white;
-    -fx-background-radius: 15px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 10);
+    -fx-background-radius: 16;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 25, 0, 0, 12);
 }
 
 .login-title-main {
@@ -26,120 +28,222 @@
     -fx-text-fill: #7f8c8d;
 }
 
-/* ================= SIDEBAR (SOL MENÜ) ================= */
+/* ================= SIDEBAR ================= */
 .sidebar {
-    -fx-background-color: #2c3e50;
-    -fx-padding: 20;
-    -fx-spacing: 12;
-    -fx-pref-width: 220;
+    -fx-background-color: #1f2b38;
+    -fx-padding: 24;
+    -fx-spacing: 14;
+    -fx-pref-width: 240;
+    -fx-background-radius: 0 20 20 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 45, 0.35, 14, 0);
 }
 
 .sidebar-title {
     -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 0 0 20 0;
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-padding: 0 0 18 0;
 }
 
-.menu-button {
+/* ================= MENU TOGGLE ================= */
+.menu-toggle {
     -fx-background-color: transparent;
     -fx-text-fill: #ecf0f1;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 10 15;
-    -fx-background-radius: 8;
+    -fx-padding: 13 18;
+    -fx-background-radius: 10;
     -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
 }
 
-.menu-button:hover {
-    -fx-background-color: #34495e;
+.menu-toggle:hover {
+    -fx-background-color: rgba(76,161,175,0.35);
+}
+
+.menu-toggle:selected {
+    -fx-background-color: rgba(76,161,175,0.55);
     -fx-text-fill: white;
+    -fx-border-color: transparent transparent transparent #4ca1af;
+    -fx-border-width: 0 0 0 4;
 }
 
+/* ================= LOGOUT ================= */
 .logout-button {
     -fx-background-color: #c0392b;
     -fx-text-fill: white;
-    -fx-background-radius: 8;
-    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 13 18;
     -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
 }
 
-.logout-button:hover { -fx-background-color: #e74c3c; }
+.logout-button:hover {
+    -fx-background-color: #e74c3c;
+}
 
-/* ================= KART YAPISI (İÇERİK ALANI) ================= */
+/* ================= CONTENT ================= */
 .content-area {
-    -fx-padding: 25;
+    -fx-padding: 28;
+    -fx-background-color: transparent;
 }
 
-.card {
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
-    -fx-padding: 20;
-}
-
-/* ================= SELECTION COLORS (ELEGANT DARK) ================= */
-
-/* Tablo ve Listelerde seçili satırın görünümü */
-.table-row-cell:filled:selected, .list-cell:filled:selected {
-    -fx-background-color: #3e91da; /* Elegant Koyu Mavi (Midnight Blue) */
-    -fx-text-fill: black;          /* Yazı rengini tam beyaz yapıyoruz */
-}
-
-/* Seçili satırın üzerine fare ile gelindiğinde (opsiyonel - biraz daha açık bir ton) */
-.table-row-cell:filled:selected:hover, .list-cell:filled:selected:hover {
-    -fx-background-color: #5c95e3;
-    -fx-text-fill: black;
-}
-
-/* Odak (Focus) çerçevesini kaldırmak istersen (daha temiz bir görüntü için) */
-.table-row-cell:filled:selected {
-    -fx-background-insets: 0;
-}
-
-/* ================= FORMLAR VE INPUTLAR ================= */
+/* ================= TITLES ================= */
 .panel-title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
     -fx-padding: 0 0 10 0;
 }
 
-.modern-input {
-    -fx-background-radius: 8;
-    -fx-padding: 10;
-    -fx-border-color: #dcdde1;
-    -fx-border-radius: 8;
+.popup-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ================= CARDS ================= */
+.card {
     -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 22;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 18, 0, 0, 8);
 }
 
-.modern-input:focused {
-    -fx-border-color: #3498db;
-    -fx-effect: dropshadow(three-pass-box, rgba(52, 152, 219, 0.2), 5, 0, 0, 0);
+/* ================= INPUT ================= */
+.modern-input,
+.admin-input {
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 11;
 }
 
-/* ================= BUTONLAR (YENİLENMİŞ) ================= */
-.btn-primary {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+.modern-input:focused,
+.admin-input:focused {
+    -fx-border-color: #4ca1af;
+    -fx-effect: dropshadow(three-pass-box, rgba(76,161,175,0.25), 6, 0, 0, 0);
+}
+
+/* ================= TABLE ================= */
+.table-wrap {
+    -fx-background-color: rgba(0,0,0,0.035);
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(0,0,0,0.08);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f6f7f9;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard-cards {
+    -fx-padding: 14 0 24 0;
+}
+
+.dashboard-card {
+    -fx-background-color: white;
+    -fx-padding: 26;
+    -fx-min-width: 280;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.28), 20, 0, 0, 10);
+}
+
+.dashboard-card-title {
     -fx-font-size: 14px;
-    -fx-padding: 10 20;
-    -fx-background-radius: 8;
+    -fx-text-fill: #7f8c8d;
+}
+
+.dashboard-card-value {
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ================= BUTTONS ================= */
+.btn-primary {
+    -fx-background-color: #4ca1af;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 11 24;
+    -fx-background-radius: 10;
     -fx-cursor: hand;
 }
 
 .btn-primary:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: #3b8f9c;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #357f8a;
+    -fx-translate-y: 1;
+}
+
+.btn-danger {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-padding: 11 24;
+    -fx-background-radius: 10;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #d63c2c;
 }
 
 .btn-link {
     -fx-background-color: transparent;
-    -fx-text-fill: #3498db;
-    -fx-cursor: hand;
+    -fx-text-fill: #4ca1af;
+    -fx-font-weight: 700;
 }
 
-.btn-link:hover { -fx-underline: true; }
+.btn-link:hover {
+    -fx-underline: true;
+}
 
+/* Gradient için */
+.transparent-scroll {
+    -fx-background-color: transparent;
+}
+
+.transparent-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== PIE CHART LEGEND FIX ===== */
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #2c3e50;
+}
+
+.chart-legend-item .label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+/* ================= ERROR ================= */
 .error-message {
     -fx-text-fill: #e74c3c;
     -fx-font-size: 12px;

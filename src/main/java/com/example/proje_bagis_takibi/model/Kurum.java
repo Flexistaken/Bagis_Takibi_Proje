@@ -12,4 +12,9 @@ public class Kurum {
 
     public int getId() { return id; }
     public String getAd() { return ad; }
+
+    @Override
+    public String toString() {
+        return ad;
+    }
 }

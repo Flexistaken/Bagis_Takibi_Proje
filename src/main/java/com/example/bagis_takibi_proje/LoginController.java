@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
-
+import javafx.scene.Parent;
 
 public class LoginController {
 
@@ -28,7 +28,6 @@ public class LoginController {
     private final AuthService authService = new AuthService();
 
     @FXML
-
     private void handleLogin(ActionEvent event) {
         String email = emailField.getText();
         String sifre = sifreField.getText();
@@ -43,15 +42,19 @@ public class LoginController {
         try {
             String fxml;
 
-            if (k.getRol().equalsIgnoreCase("ADMIN")) {
-                fxml = "admin-panel.fxml";
-            } else {
+            // ===== BAĞIŞÇI PANELİ =====
+            if (!k.getRol().equalsIgnoreCase("ADMIN")) {
+
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("bagisci-panel.fxml")
                 );
 
+                Parent root = loader.load();              // <<< AYNI
+                root.getStyleClass().add("login-root");   // <<< EKLENDİ
+
+                Scene scene = new Scene(root);
                 Stage stage = new Stage();
-                stage.setScene(new Scene(loader.load()));
+                stage.setScene(scene);
                 stage.setMaximized(true);
 
                 BagisciController controller = loader.getController();
@@ -65,16 +68,21 @@ public class LoginController {
                 return;
             }
 
+            // ===== ADMIN PANELİ =====
+            fxml = "admin-panel.fxml";
 
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource(fxml)
             );
 
+            Parent root = loader.load();              // <<< AYNI
+            root.getStyleClass().add("login-root");   // <<< EKLENDİ
+
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
+            stage.setScene(scene);
             stage.setTitle("Bağış Takip Sistemi");
             stage.setMaximized(true);
-
 
             stage.show();
 
@@ -82,11 +90,10 @@ public class LoginController {
             ((Stage) ((Node) event.getSource())
                     .getScene().getWindow()).close();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            hataLabel.setText("Panel acilirken hata olustu!");
+            hataLabel.setText("PANEL AÇILIRKEN HATA OLUŞTU !");
         }
-
     }
 
     @FXML
@@ -96,8 +103,11 @@ public class LoginController {
                     getClass().getResource("register.fxml")
             );
 
+            Parent root = loader.load();
+            root.getStyleClass().add("login-root");   // <<< EKLENDİ
+
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
+            stage.setScene(new Scene(root));
             stage.setTitle("Kayit Ol");
             stage.setMaximized(true);
 

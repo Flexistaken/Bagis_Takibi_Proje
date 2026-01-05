@@ -1,48 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bagis_takibi_proje.RaporlarController"
-            stylesheets="@style.css"
-            prefWidth="850" prefHeight="650">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.bagis_takibi_proje.RaporlarController"
+      stylesheets="@style.css"
+      styleClass="panel-gradient"
+      alignment="CENTER"
+      spacing="20"
+      prefWidth="900"
+      prefHeight="600">
 
-    <top>
-        <VBox spacing="5" style="-fx-padding: 25 25 10 25;">
-            <Label text="📊 ANALİZ VE RAPORLAR" styleClass="panel-title"/>
-            <Label text="Sistemdeki bağış hareketlerini ve kurum performanslarını inceleyin."
-                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 14;"/>
-        </VBox>
-    </top>
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
 
-    <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background-insets: 0;">
-            <VBox spacing="25" styleClass="content-area">
+    <!-- ANA KART -->
+    <VBox styleClass="card" spacing="20" prefWidth="850">
 
-                <GridPane hgap="20" vgap="20">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
+        <Label text="Raporlar"
+               style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #2c3e50;"/>
 
-                    <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="15">
-                        <Label text="🏢 Kurum Bazlı Dağılım" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2c3e50;"/>
-                        <ListView fx:id="kurumRaporList" prefHeight="250" style="-fx-background-radius: 8; -fx-border-color: #ecf0f1;"/>
-                    </VBox>
-
-                    <VBox styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="15">
-                        <Label text="👑 Lider Bağışçılar" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2c3e50;"/>
-                        <ListView fx:id="bagisciRaporList" prefHeight="250" style="-fx-background-radius: 8; -fx-border-color: #ecf0f1;"/>
-                    </VBox>
-
-                    <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" spacing="15">
-                        <Label text="🕒 Son Gerçekleşen İşlemler" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2c3e50;"/>
-                        <ListView fx:id="sonBagisList" prefHeight="180" style="-fx-background-radius: 8; -fx-border-color: #ecf0f1;"/>
-                    </VBox>
-                </GridPane>
-
+        <!-- ÖZET -->
+        <HBox spacing="20" alignment="CENTER">
+            <VBox styleClass="dashboard-card">
+                <Label text="Toplam Bağış" styleClass="dashboard-card-title"/>
+                <Label fx:id="toplamBagisLabel" styleClass="dashboard-card-value"/>
             </VBox>
-        </ScrollPane>
-    </center>
-</BorderPane>
+
+            <VBox styleClass="dashboard-card">
+                <Label text="Bugünkü Bağış" styleClass="dashboard-card-title"/>
+                <Label fx:id="bugunBagisLabel" styleClass="dashboard-card-value"/>
+            </VBox>
+
+            <VBox styleClass="dashboard-card">
+                <Label text="Toplam Kurum" styleClass="dashboard-card-title"/>
+                <Label fx:id="kurumSayisiLabel" styleClass="dashboard-card-value"/>
+            </VBox>
+        </HBox>
+
+        <Separator opacity="0.3"/>
+
+        <!-- GRAFİKLER -->
+        <HBox spacing="30" alignment="CENTER">
+
+            <!-- Kurumlara Göre Bağış -->
+            <VBox spacing="10">
+                <Label text="Kurumlara Göre Bağış Dağılımı"
+                       style="-fx-font-weight: bold;"/>
+                <PieChart fx:id="kurumBagisChart" prefWidth="430" prefHeight="360"/>
+            </VBox>
+
+            <!-- Lider Bağışçılar -->
+            <VBox spacing="10">
+                <Label text="Lider Bağışçılar (Top 5)"
+                       style="-fx-font-weight: bold;"/>
+                <BarChart fx:id="liderBagisciChart">
+                    <xAxis>
+                        <CategoryAxis/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis/>
+                    </yAxis>
+                </BarChart>
+            </VBox>
+
+        </HBox>
+
+        <!-- ALT BUTON BAR -->
+        <HBox alignment="CENTER"
+              style="-fx-padding: 20 0 0 0;">
+
+            <HBox spacing="10"
+                  alignment="CENTER_LEFT"
+                  HBox.hgrow="ALWAYS">
+
+                <Button text="Kapat"
+                        onAction="#kapat"
+                        styleClass="btn-danger"/>
+            </HBox>
+
+            <HBox spacing="10"
+                  alignment="CENTER_RIGHT"
+                  HBox.hgrow="ALWAYS">
+
+                <Button text="PDF'e Aktar"
+                        onAction="#pdfExport"
+                        styleClass="btn-primary"/>
+            </HBox>
+
+        </HBox>
+
+
+    </VBox>
+</VBox>

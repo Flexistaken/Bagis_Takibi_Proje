@@ -2,7 +2,7 @@
 2,Deniz,deniz@mail.com,123456,ADMIN
 3,Eda,eda@mail.com,123456,ADMIN
 
-4,Ayse,ayse@mail.com,123456,BAGISCI
+4,Ayşe,ayse@mail.com,123456,BAGISCI
 5,Ali,ali@mail.com,123456,BAGISCI
 6,Mehmet,mehmet@mail.com,123456,BAGISCI
 7,Elif,elif@mail.com,123456,BAGISCI
@@ -21,8 +21,8 @@
 20,Ceren,ceren@mail.com,123456,BAGISCI
 21,Berna,berna@mail.com,123456,BAGISCI
 22,Kadir,kadir@mail.com,123456,BAGISCI
-23,Kıvanc,kıvanc@mail.com,123456,BAGISCI
+23,Kıvanç,kıvanc@mail.com,123456,BAGISCI
 24,Adil,adil@mail.com,123456,BAGISCI
-25,Yagmur,yagmur@mail.com,123456,BAGISCI
+25,Yağmur,yagmur@mail.com,123456,BAGISCI
 26,Burak,b,2,BAGISCI
 27,taha aydin,sea@.,123456,BAGISCI

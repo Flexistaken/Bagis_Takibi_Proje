@@ -6,6 +6,7 @@ import com.example.proje_bagis_takibi.util.FileUtil;
 import com.example.proje_bagis_takibi.util.ValidationUtil;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 public class BagisService {
     private final String bagisDosya = "data/bagislar.txt";
@@ -29,8 +30,10 @@ public class BagisService {
                 kurumId,
                 tur,
                 miktar,
-                aciklama
+                aciklama,
+                LocalDate.now() // YENİ
         );
+
 
         FileUtil.bagisEkle(bagisDosya, bagis);
         return true;
