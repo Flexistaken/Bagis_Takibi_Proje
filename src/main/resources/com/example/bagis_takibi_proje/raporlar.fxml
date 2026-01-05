@@ -20,7 +20,6 @@
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background-insets: 0;">
             <VBox spacing="25" styleClass="content-area">
 
-<<<<<<< HEAD
                 <GridPane hgap="20" vgap="20">
                     <columnConstraints>
                         <ColumnConstraints percentWidth="50"/>
@@ -36,16 +35,6 @@
                         <Label text="👑 Lider Bağışçılar" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2c3e50;"/>
                         <ListView fx:id="bagisciRaporList" prefHeight="250" style="-fx-background-radius: 8; -fx-border-color: #ecf0f1;"/>
                     </VBox>
-=======
-            <Label text="Kurum Bazlı Bağışlar"/>
-            <ListView fx:id="kurumRaporList"/>
-
-            <Label text="En Cok Bağış Yapanlar"/>
-            <ListView fx:id="bagisciRaporList"/>
-
-            <Label text="Son Bağışlar"/>
-            <ListView fx:id="sonBagisList"/>
->>>>>>> e26c6781f9cf2e037616465145cc3fbd01673424
 
                     <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" spacing="15">
                         <Label text="🕒 Son Gerçekleşen İşlemler" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2c3e50;"/>

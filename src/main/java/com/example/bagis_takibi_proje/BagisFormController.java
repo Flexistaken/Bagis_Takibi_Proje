@@ -48,7 +48,7 @@ public class BagisFormController {
             hata("Lütfen miktarı sayı olarak girin.");
         } catch (Exception e) {
             e.printStackTrace();
-            hata("Bağış yapılırken hata oluştu!");
+            hata("Bağış yapılırken hata oluştu.");
         }
     }
 

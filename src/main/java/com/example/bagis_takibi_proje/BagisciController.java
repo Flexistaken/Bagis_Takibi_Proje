@@ -54,18 +54,14 @@ public class BagisciController {
     @FXML
     private TableColumn<Bagis, String> bagisAciklamaColumn;
 
-    @FXML
-    private Label welcomeLabel;
 
-    // login'den set
+    // 🔴 Login'den set edeceğiz
     private Bagisci aktifBagisci;
 
     public void setAktifBagisci(Bagisci bagisci) {
         this.aktifBagisci = bagisci;
-        welcomeLabel.setText("Hoş geldin, " + bagisci.getAd());
-        bagislarimiListele(); // istersen burada otomatik yükle
+        bagislarimiListele();
     }
-
 
 
     @FXML
