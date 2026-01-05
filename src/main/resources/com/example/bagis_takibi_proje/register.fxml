@@ -2,30 +2,54 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bagis_takibi_proje.RegisterController"
-            stylesheets="@style.css"
-            prefWidth="400" prefHeight="320">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.bagis_takibi_proje.RegisterController"
+           stylesheets="@style.css"
+           prefWidth="600" prefHeight="550"
+           styleClass="login-root"> <VBox alignment="CENTER" spacing="20">
 
+    <VBox spacing="20" alignment="CENTER" maxWidth="400" styleClass="login-card">
+        <padding>
+            <Insets top="40" right="45" bottom="40" left="45"/>
+        </padding>
 
-    <VBox spacing="14" alignment="CENTER"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
+        <VBox spacing="5" alignment="CENTER">
+            <Label text="YENİ HESAP" styleClass="login-title-main"/>
+            <Label text="Bağış sistemine katılmak için bilgilerinizi girin" styleClass="login-subtitle"/>
+        </VBox>
 
-        <Label text="Kayıt Ol" styleClass="title"/>
+        <Separator opacity="0.2" />
 
-        <TextField fx:id="adField" promptText="Ad Soyad"/>
-        <TextField fx:id="emailField" promptText="E-mail"/>
-        <PasswordField fx:id="sifreField" promptText="Şifre"/>
+        <VBox spacing="15">
+            <VBox spacing="5">
+                <Label text="AD SOYAD" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 10;"/>
+                <TextField fx:id="adField" promptText="Adınız ve Soyadınız" styleClass="modern-input"/>
+            </VBox>
 
-        <Button text="Kaydı Tamamla"
-                onAction="#kayitOl"
-                styleClass="primary-button"/>
+            <VBox spacing="5">
+                <Label text="E-MAİL" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 10;"/>
+                <TextField fx:id="emailField" promptText="örnek@mail.com" styleClass="modern-input"/>
+            </VBox>
 
-        <Label fx:id="mesajLabel" styleClass="message"/>
+            <VBox spacing="5">
+                <Label text="ŞİFRE" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 10;"/>
+                <PasswordField fx:id="sifreField" promptText="••••••••" styleClass="modern-input"/>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="15" fillWidth="true">
+            <Button text="Kaydı Tamamla"
+                    onAction="#kayitOl"
+                    styleClass="btn-primary"
+                    maxWidth="Infinity"/>
+
+            <Label fx:id="mesajLabel" styleClass="error-message" wrapText="true" alignment="CENTER"/>
+        </VBox>
+
     </VBox>
 
-</AnchorPane>
+</VBox>
+
+</StackPane>

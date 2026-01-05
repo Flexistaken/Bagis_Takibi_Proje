@@ -1,112 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bagis_takibi_proje.AdminController"
-            stylesheets="@style.css"
-            prefWidth="900" prefHeight="550">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bagis_takibi_proje.AdminController"
+            stylesheets="@style.css" prefWidth="1000" prefHeight="650">
 
-    <!-- ================= ÜST BAŞLIK ================= -->
-    <top>
-        <Label text="ADMİN PANELİ"
-               BorderPane.alignment="CENTER"
-               styleClass="panel-title"/>
-    </top>
-
-    <!-- ================= SOL MENU ================= -->
     <left>
-        <VBox spacing="10" styleClass="sidebar">
-            <Label text="MENÜ"
-                   styleClass="sidebar-title"/>
-            <!--kurumları listele butonunu sildim, bence direkt gözükmesi ve her işlemden sonra güncellenmesi daha iyi -->
-
-
-            <Button text="Kurum Ekle"
-                    styleClass="menu-button"
-                    onAction="#kurumEkle"/>
-
-            <Button text="Kurum Güncelle"
-                    styleClass="menu-button"
-                    onAction="#kurumGuncelle"/>
-
-            <Separator/>
-
-            <Button text="Kurum Sil"
-                    styleClass="menu-button"
-                    onAction="#kurumSil"/>
-
-            <Button text="Bağış Sil"
-                    styleClass="menu-button"
-                    onAction="#bagisSil"/>
-
-            <Separator/>
-
-            <Button text="Raporlar"
-                    styleClass="menu-button"
-                    onAction="#raporlarAc"/>
-
-            <Separator/>
-
-            <Button text="Çıkış Yap"
-                    styleClass="logout-button"
-                    onAction="#cikisYap"/>
-
-
-
+        <VBox styleClass="sidebar">
+            <Label text="YÖNETİM PANELİ" styleClass="sidebar-title"/>
+            <Button text="➕ Kurum Ekle" onAction="#kurumEkle" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="🔄 Kurum Güncelle" onAction="#kurumGuncelle" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="🗑️ Kurum Sil" onAction="#kurumSil" styleClass="menu-button" maxWidth="Infinity"/>
+            <Separator opacity="0.3"/>
+            <Button text="❌ Bağış Sil" onAction="#bagisSil" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📊 Raporlar" onAction="#raporlarAc" styleClass="menu-button" maxWidth="Infinity"/>
+            <Region VBox.vgrow="ALWAYS"/> <Button text="🚪 Çıkış Yap" onAction="#cikisYap" styleClass="logout-button" maxWidth="Infinity"/>
         </VBox>
     </left>
 
-    <!-- ================= ORTA ALAN ================= -->
     <center>
-        <VBox spacing="12" style="-fx-padding:10;">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" styleClass="content-area">
+                <Label text="Genel Bakış" styleClass="panel-title"/>
 
-            <!-- KURUMLAR TABLOSU -->
-            <Label text="Kurumlar"
-                   styleClass="section-title"/>
+                <VBox styleClass="card" spacing="10">
+                    <Label text="Kurum Listesi" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <TableView fx:id="kurumTable" prefHeight="250">
+                        <columns>
+                            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                            <TableColumn fx:id="adColumn" text="Kurum Adı" prefWidth="400"/>
+                        </columns>
+                    </TableView>
+                </VBox>
 
-
-            <TableView fx:id="kurumTable">
-                <columns>
-                    <TableColumn fx:id="idColumn"
-                                 text="ID"
-                                 prefWidth="80"/>
-
-                    <TableColumn fx:id="adColumn"
-                                 text="Kurum Adı"
-                                 prefWidth="300"/>
-                </columns>
-            </TableView>
-
-            <Separator/>
-
-            <!--BAGISLAR TABLOSU-->
-            <Label text="Bağışlar"
-                   styleClass="section-title"/>
-
-
-            <TableView fx:id="bagisTable">
-                <columns>
-                    <TableColumn fx:id="bagisIdColumn"
-                                 text="ID"
-                                 prefWidth="80"/>
-
-                    <TableColumn fx:id="bagisciIdColumn"
-                                 text="Bağışçı ID"
-                                 prefWidth="120"/>
-
-                    <TableColumn fx:id="bagisKurumIdColumn"
-                                 text="Kurum ID"
-                                 prefWidth="120"/>
-
-                    <TableColumn fx:id="bagisMiktarColumn"
-                                 text="Miktar"
-                                 prefWidth="120"/>
-                </columns>
-            </TableView>
-
-        </VBox>
+                <VBox styleClass="card" spacing="10">
+                    <Label text="Son Bağışlar" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <TableView fx:id="bagisTable" prefHeight="250">
+                        <columns>
+                            <TableColumn fx:id="bagisIdColumn" text="ID" prefWidth="50"/>
+                            <TableColumn fx:id="bagisciIdColumn" text="Bağışçı" prefWidth="150"/>
+                            <TableColumn fx:id="bagisKurumIdColumn" text="Kurum" prefWidth="150"/>
+                            <TableColumn fx:id="bagisMiktarColumn" text="Miktar (TL)" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
     </center>
-
 </BorderPane>

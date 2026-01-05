@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 
 public class AdminController {
@@ -124,16 +125,26 @@ public class AdminController {
     @FXML
     private void cikisYap() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("login.fxml")
-            );
+            // 1. FXML dosyasını loader ile hazırla
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
 
+            // 2. Sahneyi (Scene) doğrudan loader üzerinden oluştur
+            // Parent hatasını önlemek için değişken tanımlamadan direkt yükleme yapıyoruz
+            Scene scene = new Scene(loader.load());
+
+            // 3. Mevcut pencereyi (Stage) kurumTable üzerinden yakala
             Stage stage = (Stage) kurumTable.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Giriş");
+
+            // 4. Yeni sahneyi ata ve başlığı güncelle
+            stage.setScene(scene);
+            stage.setTitle("Giriş - Bağış Takip Sistemi");
+
+            // stage.setMaximized(true) satırını sildik çünkü zaten büyük,
+            // böylece mevcut boyutunu koruyarak sadece içeriği değiştirir.
             stage.show();
 
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.err.println("Giriş ekranı yüklenirken hata oluştu!");
             e.printStackTrace();
         }
     }

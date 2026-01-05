@@ -52,6 +52,7 @@ public class LoginController {
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(loader.load()));
+                stage.setMaximized(true);
 
                 BagisciController controller = loader.getController();
                 controller.setAktifBagisci((Bagisci) k);
@@ -72,6 +73,8 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Bağış Takip Sistemi");
+            stage.setMaximized(true);
+
 
             stage.show();
 
@@ -96,6 +99,8 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Kayit Ol");
+            stage.setMaximized(true);
+
             stage.show();
 
         } catch (Exception e) {

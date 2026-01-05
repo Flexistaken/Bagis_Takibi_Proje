@@ -2,33 +2,47 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bagis_takibi_proje.KurumFormController"
-            stylesheets="@style.css"
-            prefWidth="350" prefHeight="220">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.bagis_takibi_proje.KurumFormController"
+      stylesheets="@style.css"
+      spacing="25"
+      alignment="CENTER"
+      prefWidth="380"
+      style="-fx-background-color: white; -fx-background-radius: 15;">
 
-    <VBox spacing="14" alignment="CENTER"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
+    <padding>
+        <Insets top="35" right="40" bottom="35" left="40"/>
+    </padding>
 
-        <Label fx:id="titleLabel"
-               text="Kurum Ekle"
-               styleClass="panel-title"/>
-
-        <TextField fx:id="kurumAdField"
-                   promptText="Kurum Adı"/>
-
-        <HBox spacing="10" alignment="CENTER">
-            <Button text="Kaydet"
-                    styleClass="primary-button"
-                    onAction="#kaydet"/>
-
-            <Button text="Vazgeç"
-                    onAction="#iptal"/>
-        </HBox>
-
+    <VBox spacing="8" alignment="CENTER">
+        <Label fx:id="titleLabel" text="Kurum Yönetimi" styleClass="panel-title" style="-fx-font-size: 22;"/>
+        <Label text="Lütfen kurum adını giriniz." style="-fx-text-fill: #95a5a6; -fx-font-size: 13;"/>
     </VBox>
-</AnchorPane>
+
+    <Separator opacity="0.3"/>
+
+    <VBox spacing="8">
+        <Label text="KURUM ADI" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 11;"/>
+        <TextField fx:id="kurumAdField"
+                   promptText="Örn: Türk Kızılayı"
+                   styleClass="modern-input"/>
+    </VBox>
+
+    <HBox spacing="15" alignment="CENTER">
+        <padding>
+            <Insets top="10"/>
+        </padding>
+
+        <Button text="Vazgeç"
+                onAction="#iptal"
+                style="-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-cursor: hand; -fx-font-weight: bold;"/>
+
+        <Button text="Kaydet"
+                onAction="#kaydet"
+                styleClass="btn-primary"
+                prefWidth="140"/>
+    </HBox>
+
+</VBox>

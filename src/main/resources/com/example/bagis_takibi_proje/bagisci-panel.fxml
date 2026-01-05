@@ -2,72 +2,78 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.bagis_takibi_proje.BagisciController"
             stylesheets="@style.css"
-            styleClass="panel-root"
-            prefWidth="800" prefHeight="500">
+            prefWidth="950" prefHeight="600">
 
-
-    <!-- ÜST -->
-    <Label text="BAĞIŞÇI PANELİ"
-           BorderPane.alignment="CENTER"
-           styleClass="panel-title"/>
-
-    <!-- SOL MENU -->
     <left>
-        <VBox spacing="10" styleClass="sidebar">
+        <VBox styleClass="sidebar">
+            <Label text="BAĞIŞÇI PANELİ" styleClass="sidebar-title"/>
 
-            <Label text="MENÜ"
-                   styleClass="sidebar-title"/>
-            <!-- kurumları listeleyi burdan da çıkradım -->
-
-            <Button text="Bağış Yap"
+            <Button text="🎁 Bağış Yap"
                     styleClass="menu-button"
-                    onAction="#bagisPopupAc"/>
+                    onAction="#bagisPopupAc"
+                    maxWidth="Infinity"/>
 
-            <Separator/>
+            <Separator opacity="0.3"/>
 
-            <Button text="Çıkış Yap"
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button text="🚪Çıkış Yap"
                     styleClass="logout-button"
-                    onAction="#cikisYap"/>
-
+                    onAction="#cikisYap"
+                    maxWidth="Infinity"/>
         </VBox>
     </left>
 
-
-    <!-- ORTA -->
     <center>
-        <VBox spacing="10" style="-fx-padding:10;">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background-insets: 0;">
+            <VBox spacing="25" styleClass="content-area">
 
-            <Label text="Kurumlar"
-                   styleClass="section-title"/>
+                <VBox spacing="5">
+                    <Label text="Hoş Geldiniz 👋" styleClass="panel-title"/>
+                    <Label text="Bağış yapmak istediğiniz kurumu seçin veya geçmişinizi inceleyin."
+                           style="-fx-text-fill: #7f8c8d; -fx-font-size: 14;"/>
+                </VBox>
 
+                <VBox styleClass="card" spacing="15">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="🏢 Kurum Listesi" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Bağış yapmak için kurumun üzerine tıklayın" style="-fx-font-size: 11; -fx-text-fill: #95a5a6;"/>
+                    </HBox>
 
-            <TableView fx:id="kurumTable">
-                <columns>
-                    <TableColumn fx:id="kurumIdColumn" text="ID"/>
-                    <TableColumn fx:id="kurumAdColumn" text="Kurum Adı"/>
-                </columns>
-            </TableView>
+                    <TableView fx:id="kurumTable" prefHeight="200">
+                        <columns>
+                            <TableColumn fx:id="kurumIdColumn" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="kurumAdColumn" text="Kurum Adı" prefWidth="450"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
 
-            <Separator/>
+                <VBox styleClass="card" spacing="15">
+                    <Label text="📜 Geçmiş Bağışlarım" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
 
-            <Label text="Geçmiş Bağışlarım"
-                   styleClass="section-title"/>
+                    <TableView fx:id="bagisTable" prefHeight="250">
+                        <columns>
+                            <TableColumn fx:id="bagisKurumIdColumn" text="Kurum ID" prefWidth="100"/>
+                            <TableColumn fx:id="bagisMiktarColumn" text="Miktar (TL)" prefWidth="120"/>
+                            <TableColumn fx:id="bagisAciklamaColumn" text="Açıklama" prefWidth="350"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
 
-
-            <TableView fx:id="bagisTable">
-                <columns>
-                    <TableColumn fx:id="bagisKurumIdColumn" text="Kurum ID"/>
-                    <TableColumn fx:id="bagisMiktarColumn" text="Miktar"/>
-                    <TableColumn fx:id="bagisAciklamaColumn" text="Açıklama"/>
-                </columns>
-            </TableView>
-
-        </VBox>
+            </VBox>
+        </ScrollPane>
     </center>
-
 
 </BorderPane>

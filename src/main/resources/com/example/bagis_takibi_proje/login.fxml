@@ -2,34 +2,37 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bagis_takibi_proje.LoginController"
-            stylesheets="@style.css"
-            prefWidth="400" prefHeight="320">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.bagis_takibi_proje.LoginController"
+           stylesheets="@style.css"
+           prefWidth="600" prefHeight="450"
+           styleClass="login-root">
 
+    <VBox alignment="CENTER" spacing="20">
 
-    <VBox spacing="14" alignment="CENTER"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
+        <VBox spacing="20" alignment="CENTER" maxWidth="350" maxHeight="400" styleClass="login-card">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
 
-        <Label text="Bağış Takip Sistemi" styleClass="title"/>
+            <Label text="BAĞIŞ TAKİP" styleClass="login-title-main"/>
+            <Label text="Lütfen bilgilerinizi giriniz" styleClass="login-subtitle"/>
 
-        <TextField fx:id="emailField" promptText="E-mail"/>
+            <VBox spacing="10">
+                <TextField fx:id="emailField" promptText="E-mail" styleClass="modern-input"/>
+                <PasswordField fx:id="sifreField" promptText="Şifre" styleClass="modern-input"/>
+            </VBox>
 
-        <PasswordField fx:id="sifreField" promptText="Şifre"/>
+            <VBox spacing="12" fillWidth="true">
+                <Button text="Giriş Yap" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
+                <Button text="Hesabın yok mu? Kayıt Ol" onAction="#kayitEkraniAc" styleClass="btn-link" maxWidth="Infinity"/>
+            </VBox>
 
-        <Button text="Giriş Yap"
-                onAction="#handleLogin"
-                styleClass="primary-button"/>
+            <Label fx:id="hataLabel" styleClass="error-message"/>
+        </VBox>
 
-        <Button text="Kayıt Ol"
-                onAction="#kayitEkraniAc"
-                styleClass="secondary-button"/>
-
-        <Label fx:id="hataLabel" styleClass="message"/>
     </VBox>
 
-</AnchorPane>
+</StackPane>

@@ -25,3 +25,4 @@
 24,Adil,adil@mail.com,123456,BAGISCI
 25,Yagmur,yagmur@mail.com,123456,BAGISCI
 26,Burak,b,2,BAGISCI
+27,taha aydin,sea@.,123456,BAGISCI
