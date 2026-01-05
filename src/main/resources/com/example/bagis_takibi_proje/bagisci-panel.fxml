@@ -9,6 +9,37 @@
             stylesheets="@style.css"
             prefWidth="950" prefHeight="600">
 
+<<<<<<< HEAD
+=======
+
+    <!-- ÜST -->
+    <top>
+        <HBox alignment="CENTER"
+              style="-fx-padding: 10;"
+              spacing="10">
+
+            <!-- SOL: Hoş geldin -->
+            <Label fx:id="welcomeLabel"
+                   styleClass="welcome-text"/>
+
+            <!-- Ortalamak için sol boşluk -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- ORTA: Panel Başlığı -->
+            <Label text="BAĞIŞÇI PANELİ"
+                   styleClass="panel-title"/>
+
+            <!-- Sağ boşluk (denge için) -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+        </HBox>
+    </top>
+
+
+
+
+    <!-- SOL MENU -->
+>>>>>>> e26c6781f9cf2e037616465145cc3fbd01673424
     <left>
         <VBox styleClass="sidebar">
             <Label text="BAĞIŞÇI PANELİ" styleClass="sidebar-title"/>

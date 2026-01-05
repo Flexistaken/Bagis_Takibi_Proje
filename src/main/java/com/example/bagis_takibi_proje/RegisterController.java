@@ -33,7 +33,7 @@ public class RegisterController {
             );
 
             mesajLabel.setStyle("-fx-text-fill:green;");
-            mesajLabel.setText("Kayit basarili!");
+            mesajLabel.setText("Kayıt başarılı!");
 
             // pencereyi kapat
             Stage stage = (Stage) adField.getScene().getWindow();

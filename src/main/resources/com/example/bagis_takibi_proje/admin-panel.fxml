@@ -6,6 +6,34 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bagis_takibi_proje.AdminController"
             stylesheets="@style.css" prefWidth="1000" prefHeight="650">
 
+<<<<<<< HEAD
+=======
+    <!-- ================= ÜST BAŞLIK ================= -->
+    <top>
+        <HBox alignment="CENTER"
+              style="-fx-padding: 10;"
+              spacing="10">
+
+            <!-- SOL: Hoş geldin -->
+            <Label fx:id="welcomeLabel"
+                   styleClass="welcome-text"/>
+
+            <!-- Ortalamak için sol boşluk -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- ORTA: Panel Başlığı -->
+            <Label text="ADMİN PANELİ"
+                   styleClass="panel-title"/>
+
+            <!-- Sağ boşluk (denge için) -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+        </HBox>
+    </top>
+
+
+    <!-- ================= SOL MENU ================= -->
+>>>>>>> e26c6781f9cf2e037616465145cc3fbd01673424
     <left>
         <VBox styleClass="sidebar">
             <Label text="YÖNETİM PANELİ" styleClass="sidebar-title"/>

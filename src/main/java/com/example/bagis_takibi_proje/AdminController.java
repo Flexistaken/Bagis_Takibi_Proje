@@ -1,5 +1,6 @@
 package com.example.bagis_takibi_proje;
 
+import com.example.proje_bagis_takibi.model.Admin;
 import com.example.proje_bagis_takibi.model.Bagis;
 import com.example.proje_bagis_takibi.model.Kurum;
 import com.example.proje_bagis_takibi.service.BagisService;
@@ -20,6 +21,8 @@ public class AdminController {
     @FXML private TableColumn<Kurum, Integer> idColumn;
     @FXML private TableColumn<Kurum, String> adColumn;
     @FXML private TextField kurumAdField;
+    @FXML private Label welcomeLabel;
+
 
     @FXML private TableView<Bagis> bagisTable;
     @FXML private TableColumn<Bagis, Integer> bagisIdColumn;
@@ -51,6 +54,10 @@ public class AdminController {
         bagislariListele();
     }
 
+    public void setAktifAdmin(Admin admin) {
+        welcomeLabel.setText("Hoş geldin, " + admin.getAd());
+    }
+
     @FXML
     private void kurumlariListele() {
         kurumTable.setItems(
@@ -69,7 +76,7 @@ public class AdminController {
     private void kurumSil() {
         Kurum secili = kurumTable.getSelectionModel().getSelectedItem();
         if (secili == null) {
-            uyar("Lütfen silmek icin kurum seciniz.");
+            uyar("Lütfen silmek icin kurum seçiniz.");
             return;
         }
 
@@ -194,7 +201,7 @@ public class AdminController {
 
     private void hata(String mesaj) {
         Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setHeaderText("Hata");
+        a.setHeaderText("Hata!");
         a.setContentText(mesaj);
         a.showAndWait();
     }
