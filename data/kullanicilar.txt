@@ -26,3 +26,6 @@
 25,Yağmur,yagmur@mail.com,123456,BAGISCI
 26,Burak,b,2,BAGISCI
 27,taha aydin,sea@.,123456,BAGISCI
+28,Necip Uysal,necipuysal@.com,1903,BAGISCI
+29,Necip Uysal,necip1903@gmail.com,19031903,BAGISCI
+30,deniz,deniz@mail.com,1234,BAGISCI

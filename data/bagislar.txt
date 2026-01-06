@@ -22,3 +22,5 @@
 22,25,13,PARA,1000.0,Kadın dayanışması için.,2026-01-06
 23,26,20,PARA,3000.0,AHBAP gönüllü desteği.,2026-01-06
 24,4,6,EGITIM,1000.0,eğitim,2026-01-06
+25,29,5,EGITIM,10000.0,Necip Uysal'dan sevgilerle,2026-01-06
+26,30,3,GIDA,1000.0,depremzede karşdemlerimize,2026-01-06

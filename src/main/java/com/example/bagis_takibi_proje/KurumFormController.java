@@ -9,21 +9,26 @@ import javafx.stage.Stage;
 
 public class KurumFormController {
 
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private TextField kurumAdField;
+    @FXML private Label titleLabel;
+    @FXML private TextField kurumAdField;
 
     private final KurumService kurumService = new KurumService();
+    private Kurum guncellenecekKurum;
 
-    private Kurum guncellenecekKurum; // null ise EKLE modunda
+    // --- KRİTİK EKLEME: İşlem durumunu tutan değişken ---
+    private boolean islemBasarili = false;
+
+    // AdminController'ın bu değeri okuyabilmesi için getter metodu
+    public boolean isIslemBasarili() {
+        return islemBasarili;
+    }
 
     /* ================= EKLE MODU ================= */
     public void ekleModu() {
         titleLabel.setText("Kurum Ekle");
         guncellenecekKurum = null;
         kurumAdField.clear();
+        islemBasarili = false; // Her açılışta resetle
     }
 
     /* ================= GÜNCELLE MODU ================= */
@@ -31,32 +36,40 @@ public class KurumFormController {
         titleLabel.setText("Kurum Güncelle");
         this.guncellenecekKurum = kurum;
         kurumAdField.setText(kurum.getAd());
+        islemBasarili = false; // Her açılışta resetle
     }
 
     @FXML
     private void kaydet() {
         String ad = kurumAdField.getText();
 
+        if (ad == null || ad.trim().isEmpty()) {
+            titleLabel.setText("Kurum adı boş olamaz!");
+            titleLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
         try {
             if (guncellenecekKurum == null) {
                 kurumService.kurumEkle(ad);
             } else {
-                kurumService.kurumGuncelle(
-                        guncellenecekKurum.getId(),
-                        ad
-                );
+                kurumService.kurumGuncelle(guncellenecekKurum.getId(), ad);
             }
 
+            // --- İŞLEM BAŞARILI: Bayrağı true yap ve kapat ---
+            this.islemBasarili = true;
             pencereyiKapat();
 
         } catch (IllegalArgumentException e) {
-            // basit validation
             titleLabel.setText(e.getMessage());
+            titleLabel.setStyle("-fx-text-fill: red;");
         }
     }
 
     @FXML
     private void iptal() {
+        // islemBasarili default olarak false olduğu için
+        // AdminController popup çıkmasını engelleyecektir.
         pencereyiKapat();
     }
 

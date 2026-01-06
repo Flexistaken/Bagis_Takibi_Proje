@@ -86,10 +86,10 @@ public class RaporlarController {
             );
         }
 
-        // 🔴 ÇOK ÖNEMLİ: Önce temizle
+        //  ÇOK ÖNEMLİ: Önce temizle
         kurumBagisChart.getData().clear();
 
-        // 🔵 PieChart verilerini burada ekliyoruz
+        //  PieChart verilerini burada ekliyoruz
         for (var e : toplamlar.entrySet()) {
 
             PieChart.Data data =
@@ -98,7 +98,7 @@ public class RaporlarController {
             kurumBagisChart.getData().add(data);
         }
 
-        // 🔥 GÖRÜNÜRLÜK AYARLARI
+        //  GÖRÜNÜRLÜK AYARLARI
         kurumBagisChart.setLegendVisible(true);     // ← kurum isimleri BURADA
         kurumBagisChart.setLabelsVisible(false);    // ← dilim üstü yazıyı kapat
 
@@ -108,7 +108,7 @@ public class RaporlarController {
         kurumBagisChart.setMinWidth(420);
         kurumBagisChart.setPrefWidth(420);
 
-        // 🔥 Hover olunca bilgi göster
+        //  Hover olunca bilgi göster
         for (PieChart.Data d : kurumBagisChart.getData()) {
             Tooltip.install(
                     d.getNode(),

@@ -28,7 +28,6 @@ public class AdminController {
     @FXML private ToggleButton btnKurumSil;
     @FXML private ToggleButton btnBagisSil;
     @FXML private ToggleButton btnRaporlar;
-
     private ToggleGroup menuGroup;
 
     /* ================= TABLOLAR ================= */
@@ -46,22 +45,16 @@ public class AdminController {
     /* ================= DASHBOARD ================= */
     @FXML private Label toplamBagisLabel;
     @FXML private Label bugunBagisLabel;
-
-    /* ================= INPUT ================= */
     @FXML private TextField kurumSearchField;
+    @FXML private Label adminWelcomeLabel;
 
     /* ================= SERVICES ================= */
     private final KurumService kurumService = new KurumService();
     private final BagisService bagisService = new BagisService();
-
-    @FXML private Label adminWelcomeLabel;
     private Admin aktifAdmin;
 
-
-    /* ================= INITIALIZE ================= */
     @FXML
     public void initialize() {
-
         /* ---- MENU TOGGLE GROUP ---- */
         menuGroup = new ToggleGroup();
         btnKurumEkle.setToggleGroup(menuGroup);
@@ -69,8 +62,6 @@ public class AdminController {
         btnKurumSil.setToggleGroup(menuGroup);
         btnBagisSil.setToggleGroup(menuGroup);
         btnRaporlar.setToggleGroup(menuGroup);
-
-
 
         /* ---- KURUM TABLOSU ---- */
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -104,38 +95,24 @@ public class AdminController {
                 )
         );
 
-        /* ---- LOAD DATA ---- */
         kurumlariListele();
         bagislariListele();
     }
 
     public void setAktifAdmin(Admin admin) {
         this.aktifAdmin = admin;
-
         if (adminWelcomeLabel != null) {
-            adminWelcomeLabel.setText(
-                    "Hoş geldin, " + admin.getAd() + " (Admin)"
-            );
+            adminWelcomeLabel.setText("Hoş geldin, " + admin.getAd() + " (Admin)");
         }
     }
 
-    /* ================= KURUM ================= */
     @FXML
     private void kurumlariListele() {
-        kurumTable.setItems(
-                FXCollections.observableArrayList(kurumService.kurumlariGetir())
-        );
+        kurumTable.setItems(FXCollections.observableArrayList(kurumService.kurumlariGetir()));
     }
 
-    @FXML
-    private void kurumEkle() {
-        kurumPopupAc(false);
-    }
-
-    @FXML
-    private void kurumGuncelle() {
-        kurumPopupAc(true);
-    }
+    @FXML private void kurumEkle() { kurumPopupAc(false); }
+    @FXML private void kurumGuncelle() { kurumPopupAc(true); }
 
     @FXML
     private void kurumSil() {
@@ -144,7 +121,6 @@ public class AdminController {
             uyar("Lütfen silmek için kurum seçiniz.");
             return;
         }
-
         if (onay(secili.getAd() + " silinsin mi?")) {
             kurumService.kurumSil(secili.getId());
             kurumlariListele();
@@ -152,10 +128,8 @@ public class AdminController {
         }
     }
 
-    /* ================= BAĞIŞ ================= */
     @FXML
     private void bagislariListele() {
-
         Map<Integer, String> kurumMap = new HashMap<>();
         for (Kurum k : kurumService.kurumlariGetir()) {
             kurumMap.put(k.getId(), k.getAd());
@@ -169,7 +143,6 @@ public class AdminController {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
         var rows = bagisService.tumBagislariGetir().stream()
                 .map(b -> new BagisRow(
                         b.getId(),
@@ -178,19 +151,14 @@ public class AdminController {
                         b.getTur().toString(),
                         String.format("%,.0f ₺", b.getMiktar()),
                         b.getTarih().format(formatter)
-                ))
-                .toList();
+                )).toList();
 
         bagisTable.setItems(FXCollections.observableArrayList(rows));
 
-        double toplam = bagisService.tumBagislariGetir()
-                .stream().mapToDouble(Bagis::getMiktar).sum();
-
-        double bugun = bagisService.tumBagislariGetir()
-                .stream()
+        double toplam = bagisService.tumBagislariGetir().stream().mapToDouble(Bagis::getMiktar).sum();
+        double bugun = bagisService.tumBagislariGetir().stream()
                 .filter(b -> b.getTarih().equals(LocalDate.now()))
-                .mapToDouble(Bagis::getMiktar)
-                .sum();
+                .mapToDouble(Bagis::getMiktar).sum();
 
         toplamBagisLabel.setText(String.format("%,.0f ₺", toplam));
         bugunBagisLabel.setText(String.format("%,.0f ₺", bugun));
@@ -203,7 +171,6 @@ public class AdminController {
             uyar("Lütfen silmek için bir bağış seçiniz.");
             return;
         }
-
         if (onay("Seçili bağış silinsin mi?")) {
             bagisService.bagisSilAdmin(secili.getBagisId());
             bagislariListele();
@@ -211,7 +178,6 @@ public class AdminController {
         }
     }
 
-    /* ================= RAPOR ================= */
     @FXML
     private void raporlarAc() {
         try {
@@ -220,12 +186,9 @@ public class AdminController {
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Raporlar");
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
-    /* ================= ÇIKIŞ ================= */
     @FXML
     private void cikisYap() {
         try {
@@ -235,18 +198,16 @@ public class AdminController {
             stage.setScene(scene);
             stage.setTitle("Giriş - Bağış Takip Sistemi");
             stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
-    /* ================= POPUP ================= */
+    /* ================= POPUP (DÜZELTİLMİŞ) ================= */
     private void kurumPopupAc(boolean guncelle) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("kurum-form.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Kurum");
+            stage.setTitle(guncelle ? "Kurum Güncelle" : "Yeni Kurum");
 
             KurumFormController controller = loader.getController();
 
@@ -261,18 +222,23 @@ public class AdminController {
                 controller.ekleModu();
             }
 
+            // ÖNEMLİ: showAndWait pencere kapanana kadar kodu burada durdurur
             stage.showAndWait();
-            kurumlariListele();
-            bilgi(guncelle ? "Kurum başarıyla güncellendi."
-                    : "Kurum başarıyla eklendi.");
 
+            // PENCERE KAPANDIKTAN SONRA:
+            // Sadece controller içindeki islemBasarili değeri true ise mesaj göster
+            if (controller.isIslemBasarili()) {
+                kurumlariListele();
+                bilgi(guncelle ? "Kurum başarıyla güncellendi." : "Kurum başarıyla eklendi.");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
+            uyar("Bir hata oluştu: " + e.getMessage());
         }
     }
 
-    /* ================= ALERT ================= */
+    /* ================= ALERTS ================= */
     private void uyar(String mesaj) {
         Alert a = new Alert(Alert.AlertType.WARNING);
         a.setHeaderText(null);
