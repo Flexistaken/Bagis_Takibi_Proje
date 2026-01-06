@@ -72,7 +72,7 @@ public class RaporService {
 
                     return (k != null)
                             ? k.getAd() + " → " + e.getValue() + " TL"
-                            : "Bilinmeyen Kullanici";
+                            : "Bilinmeyen Kullanıcı";
                 })
                 .toList();
     }

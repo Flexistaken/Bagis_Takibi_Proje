@@ -22,7 +22,7 @@ public class AuthService {
     // Yeni bağışçı kaydı oluşturma
     public void kayitOl(String ad, String email, String sifre) {
         ValidationUtil.bosMu(ad, "Ad Soyad");
-        ValidationUtil.bosMu(email, "Email");
+        ValidationUtil.bosMu(email, "E-mail");
         ValidationUtil.emailGecerliMi(email);
         ValidationUtil.bosMu(sifre, "Sifre");
 

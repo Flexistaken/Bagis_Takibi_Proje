@@ -1,18 +1,19 @@
 package com.example.bagis_takibi_proje;
 
+import com.example.proje_bagis_takibi.model.Admin;
 import com.example.proje_bagis_takibi.model.Bagisci;
 import com.example.proje_bagis_takibi.model.Kullanici;
 import com.example.proje_bagis_takibi.service.AuthService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.event.ActionEvent;
-import javafx.scene.Parent;
 
 public class LoginController {
 
@@ -35,13 +36,11 @@ public class LoginController {
         Kullanici k = authService.login(email, sifre);
 
         if (k == null) {
-            hataLabel.setText("E-mail veya Şifre Hatalı!");
+            hataLabel.setText("E-posta veya şifre hatalı!");
             return;
         }
 
         try {
-            String fxml;
-
             // ===== BAĞIŞÇI PANELİ =====
             if (!k.getRol().equalsIgnoreCase("ADMIN")) {
 
@@ -49,41 +48,39 @@ public class LoginController {
                         getClass().getResource("bagisci-panel.fxml")
                 );
 
-                Parent root = loader.load();              // <<< AYNI
-                root.getStyleClass().add("login-root");   // <<< EKLENDİ
-
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setMaximized(true);
+                Parent root = loader.load();
+                root.getStyleClass().add("login-root");
 
                 BagisciController controller = loader.getController();
                 controller.setAktifBagisci((Bagisci) k);
 
-                stage.setTitle("Bagisci Paneli");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Bağışçı Paneli");
+                stage.setMaximized(true);
                 stage.show();
 
+                // login penceresini kapat
                 ((Stage) ((Node) event.getSource())
                         .getScene().getWindow()).close();
                 return;
             }
 
             // ===== ADMIN PANELİ =====
-            fxml = "admin-panel.fxml";
-
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(fxml)
+                    getClass().getResource("admin-panel.fxml")
             );
 
-            Parent root = loader.load();              // <<< AYNI
-            root.getStyleClass().add("login-root");   // <<< EKLENDİ
+            Parent root = loader.load();
+            root.getStyleClass().add("login-root");
 
-            Scene scene = new Scene(root);
+            AdminController controller = loader.getController();
+            controller.setAktifAdmin((Admin) k); // 🔥 ADMIN İSMİ GÖNDERİLİYOR
+
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Bağış Takip Sistemi");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Bağış Takip Sistemi - Admin");
             stage.setMaximized(true);
-
             stage.show();
 
             // login penceresini kapat
@@ -92,7 +89,7 @@ public class LoginController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            hataLabel.setText("PANEL AÇILIRKEN HATA OLUŞTU !");
+            hataLabel.setText("Panel açılırken hata oluştu!");
         }
     }
 
@@ -104,13 +101,12 @@ public class LoginController {
             );
 
             Parent root = loader.load();
-            root.getStyleClass().add("login-root");   // <<< EKLENDİ
+            root.getStyleClass().add("login-root");
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Kayit Ol");
+            stage.setTitle("Kayıt Ol");
             stage.setMaximized(true);
-
             stage.show();
 
         } catch (Exception e) {

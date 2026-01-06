@@ -25,7 +25,7 @@ public class KurumService {
 
     // Yeni kurum ekleme (Admin yetkisi)
     public void kurumEkle(String ad) {
-        ValidationUtil.bosMu(ad, "Kurum adi");
+        ValidationUtil.bosMu(ad, "Kurum adı");
         int yeniId = FileUtil.kurumSonId(kurumDosya) + 1;
         Kurum yeniKurum = new Kurum(yeniId, ad);
         FileUtil.kurumEkle(kurumDosya, yeniKurum);
@@ -38,7 +38,7 @@ public class KurumService {
         verileriKaydet(list);
     }
     public void kurumGuncelle(int kurumId, String yeniAd) {
-        ValidationUtil.bosMu(yeniAd, "Kurum adi");
+        ValidationUtil.bosMu(yeniAd, "Kurum adı");
         FileUtil.kurumGuncelle(kurumDosya, kurumId, yeniAd);
     }
 

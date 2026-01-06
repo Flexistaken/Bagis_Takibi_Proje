@@ -63,8 +63,23 @@
     <center>
             <VBox spacing="20" styleClass="content-area">
 
-                <!-- GENEL BAKIŞ -->
-                <Label text="Genel Bakış" styleClass="panel-title"/>
+                <HBox alignment="CENTER" spacing="20">
+
+                    <!-- SOL -->
+                    <Label fx:id="adminWelcomeLabel"
+                           styleClass="admin-welcome"/>
+
+                    <!-- ORTA -->
+                    <Label text="Genel Bakış"
+                           styleClass="panel-title"
+                           HBox.hgrow="ALWAYS"
+                           maxWidth="Infinity"
+                           alignment="CENTER"/>
+
+                    <!-- SAĞ (denge için boş) -->
+                    <Region prefWidth="250"/>
+                </HBox>
+
 
                 <!-- KURUM TABLOSU -->
                 <VBox styleClass="card" spacing="12">

@@ -1,5 +1,6 @@
 package com.example.bagis_takibi_proje;
 
+import com.example.proje_bagis_takibi.model.Admin;
 import com.example.proje_bagis_takibi.model.Bagis;
 import com.example.proje_bagis_takibi.model.BagisRow;
 import com.example.proje_bagis_takibi.model.Kurum;
@@ -13,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -53,6 +53,10 @@ public class AdminController {
     /* ================= SERVICES ================= */
     private final KurumService kurumService = new KurumService();
     private final BagisService bagisService = new BagisService();
+
+    @FXML private Label adminWelcomeLabel;
+    private Admin aktifAdmin;
+
 
     /* ================= INITIALIZE ================= */
     @FXML
@@ -105,6 +109,16 @@ public class AdminController {
         bagislariListele();
     }
 
+    public void setAktifAdmin(Admin admin) {
+        this.aktifAdmin = admin;
+
+        if (adminWelcomeLabel != null) {
+            adminWelcomeLabel.setText(
+                    "Hoş geldin, " + admin.getAd() + " (Admin)"
+            );
+        }
+    }
+
     /* ================= KURUM ================= */
     @FXML
     private void kurumlariListele() {
@@ -134,6 +148,7 @@ public class AdminController {
         if (onay(secili.getAd() + " silinsin mi?")) {
             kurumService.kurumSil(secili.getId());
             kurumlariListele();
+            bilgi("Kurum başarıyla silindi.");
         }
     }
 
@@ -192,6 +207,7 @@ public class AdminController {
         if (onay("Seçili bağış silinsin mi?")) {
             bagisService.bagisSilAdmin(secili.getBagisId());
             bagislariListele();
+            bilgi("Bağış başarıyla silindi.");
         }
     }
 
@@ -247,6 +263,9 @@ public class AdminController {
 
             stage.showAndWait();
             kurumlariListele();
+            bilgi(guncelle ? "Kurum başarıyla güncellendi."
+                    : "Kurum başarıyla eklendi.");
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -266,5 +285,13 @@ public class AdminController {
         a.setHeaderText(null);
         a.setContentText(mesaj);
         return a.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
+    }
+
+    private void bilgi(String mesaj) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Bilgi");
+        alert.setContentText(mesaj);
+        alert.showAndWait();
     }
 }

@@ -19,8 +19,8 @@ public class BagisService {
             double miktar,
             String aciklama
     ) {
-        ValidationUtil.pozitifMi(miktar, "Bagis miktari");
-        ValidationUtil.bosMu(aciklama, "Aciklama");
+        ValidationUtil.pozitifMi(miktar, "Bağış Miktarı");
+        ValidationUtil.bosMu(aciklama, "Açıklama");
 
         int yeniId = FileUtil.bagisSonId(bagisDosya) + 1;
 

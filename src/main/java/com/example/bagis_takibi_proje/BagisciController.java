@@ -5,15 +5,16 @@ import com.example.proje_bagis_takibi.service.BagisService;
 import com.example.proje_bagis_takibi.service.KurumService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 public class BagisciController {
 
@@ -28,6 +29,7 @@ public class BagisciController {
     @FXML private TextField miktarField;
     @FXML private TextField aciklamaField;
     @FXML private Button bagisYapBtn;
+    @FXML private Label welcomeLabel;
 
     /* ===== TABLO ===== */
     @FXML private TableView<Bagis> bagisTable;
@@ -44,8 +46,13 @@ public class BagisciController {
     /* ===== LOGIN'DEN SET EDİLİR ===== */
     public void setAktifBagisci(Bagisci bagisci) {
         this.aktifBagisci = bagisci;
-        dashboardDoldur();
+
+        if (welcomeLabel != null) {
+            welcomeLabel.setText("Hoş geldin, " + bagisci.getAd() + " 👋");
+        }
+
         bagislarimiListele();
+        dashboardDoldur();
     }
 
     @FXML
@@ -193,7 +200,16 @@ public class BagisciController {
 
     @FXML
     private void cikisYap() {
-        ((Stage) bagisTable.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) bagisTable.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Giriş - Bağış Takip Sistemi");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /* ===== ALERT ===== */

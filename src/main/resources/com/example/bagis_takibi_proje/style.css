@@ -243,6 +243,13 @@
     -fx-font-weight: 600;
 }
 
+/* Admin hoş geldin yazısı */
+.admin-welcome {
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-text-fill: white;
+}
+
 /* ================= ERROR ================= */
 .error-message {
     -fx-text-fill: #e74c3c;

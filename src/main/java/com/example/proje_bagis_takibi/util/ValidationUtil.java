@@ -4,19 +4,19 @@ public class ValidationUtil {
 
     public static void bosMu(String deger, String alanAdi) {
         if (deger == null || deger.trim().isEmpty()) {
-            throw new IllegalArgumentException(alanAdi + " bos birakilamaz!");
+            throw new IllegalArgumentException(alanAdi + " boş bırakılamaz !");
         }
     }
 
     public static void pozitifMi(double sayi, String alanAdi) {
         if (sayi <= 0) {
-            throw new IllegalArgumentException(alanAdi + " 0'dan buyuk olmalidir!");
+            throw new IllegalArgumentException(alanAdi + " 0'dan büyük olmalıdır !");
         }
     }
 
     public static void emailGecerliMi(String email) {
         if (!email.contains("@") || !email.contains(".")) {
-            throw new IllegalArgumentException("Gecersiz email adresi!");
+            throw new IllegalArgumentException("Geçersiz E-mail adresi !");
         }
     }
 }

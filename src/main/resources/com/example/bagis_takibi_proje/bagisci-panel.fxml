@@ -33,7 +33,9 @@
 
                 <!-- BAŞLIK -->
                 <VBox spacing="6">
-                    <Label text="Hoş geldin 👋" styleClass="panel-title"/>
+                    <Label fx:id="welcomeLabel"
+                           text="Hoş Geldiniz 👋"
+                           styleClass="panel-title"/>
                     <Label text="Bağış yaparak iyiliğe katkıda bulun."
                            style="-fx-text-fill: #ecf0f1; -fx-font-size: 14;"/>
                 </VBox>
